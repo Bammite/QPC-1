@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compétition de Culture Générale</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Fenêtre modale -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>Informations de la compétition</h2>
+      <label for="team1">Nom de l'équipe 1 :</label>
+      <input type="text" id="team1" placeholder="Doctorants I">
+      <label for="team2">Nom de l'équipe 2 :</label>
+      <input type="text" id="team2" placeholder="Master II">
+      <button id="startButton">Commencer</button>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="container">
+    <div class="team">
+      <h2 id="team1Name">Doctorants I</h2>
+      <div class="score">
+        <button class="score-btn" onclick="changeScore('team1', -10)">-</button>
+        <span id="team1Score">0</span>
+        <button class="score-btn" onclick="changeScore('team1', 10)">+</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="team">
+      <h2 id="team2Name">Master II</h2>
+      <div class="score">
+        <button class="score-btn" onclick="changeScore('team2', -10)">-</button>
+        <span id="team2Score">0</span>
+        <button class="score-btn" onclick="changeScore('team2', 10)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question et bouton suivant -->
+  <div class="question-section">
+    <p id="question">Quelle est la première capitale du Mexique ?</p>
+    <button onclick="nextQuestion()">Question suivante</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
