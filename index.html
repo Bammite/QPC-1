@@ -7,49 +7,81 @@
   <link rel="stylesheet" href="style.css?v=1.0">
 </head>
 <body>
-  <!-- Fenêtre modale -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h2>Informations de la compétition</h2>
-      <label for="team1">Nom de l'équipe 1 :</label>
-      <input type="text" id="team1" placeholder="Candidat 1 ">
-      <label for="team2">Nom de l'équipe 2 :</label>
-      <input type="text" id="team2" placeholder="Candidat 2">
-      <input type="number" name="count" id="count" placeholder="compte par pas de ">
-
-      <button id="startButton">Commencer</button>
-    </div>
-  </div>
-  <!-- Contenu principal -->
-  <div class="container">
-    <div class="team">
-      <h2 id="team1Name">Candidat 1</h2>
-      <div class="score">
-        <button class="score-btn" onclick="changeScore('team1', '-')">-</button>
-        <span id="team1Score">0</span>
-        <button class="score-btn" onclick="changeScore('team1', '+')">+</button>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="team">
-      <h2 id="team2Name">Candidat 2</h2>
-      <div class="score">
-        <button class="score-btn" onclick="changeScore('team2', '-')">-</button>
-        <span id="team2Score">0</span>
-        <button class="score-btn" onclick="changeScore('team2', '+')">+</button>
-      </div>
-    </div>
+  <!-- Timer -->
+  <div class="timer-container" id="timerContainer">
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <button class="action-btn secondary" id="stopTimerBtn">Arrêter</button>
   </div>
 
-  
-  <!-- Question et bouton suivant -->
+  <!-- Header -->
+  <div class="header">
+    <h1>Quiz Culture Générale</h1>
+  </div>
+
+  <!-- Teams Container -->
+  <div class="container" id="teamsContainer">
+    <!-- Teams will be added dynamically -->
+  </div>
+
+  <!-- Question Section -->
   <div class="question-section">
-    <p id="question">Quelle est la première capitale du Mexique ?</p>
-    <button onclick="nextQuestion()">Question suivante</button>
+    <p class="question-text" id="question">Prêt à commencer ? Configurez d'abord le quiz.</p>
+    <div>
+      <button class="action-btn" id="nextQuestionBtn" disabled>Question suivante</button>
+      <button class="action-btn secondary" id="settingsBtn">Paramètres</button>
+      <button class="action-btn secondary" id="timerBtn">Démarrer Timer</button>
+      <button class="action-btn secondary" id="resetBtn">Réinitialiser</button>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <h2 class="modal-title">Paramètres du Quiz</h2>
+      
+      <div class="settings-row">
+        <div class="settings-col">
+          <div class="input-group">
+            <label for="teamCount">Nombre d'équipes:</label>
+            <select id="teamCount">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+        <div class="settings-col">
+          <div class="input-group">
+            <label for="pointValue">Valeur des points:</label>
+            <input type="number" id="pointValue" value="1" min="1">
+          </div>
+        </div>
+      </div>
+      
+      <div id="teamInputs">
+        <div class="input-group">
+          <label for="team1">Équipe 1:</label>
+          <input type="text" id="team1" placeholder="Nom de l'équipe 1">
+        </div>
+        <div class="input-group">
+          <label for="team2">Équipe 2:</label>
+          <input type="text" id="team2" placeholder="Nom de l'équipe 2">
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label>
+          <input type="checkbox" id="enableTimer"> Activer le timer
+        </label>
+      </div>
+      
+      <div class="input-group" id="timerSettings" style="display: none;">
+        <label for="timerDuration">Durée (minutes):</label>
+        <input type="number" id="timerDuration" value="5" min="1">
+      </div>
+      
+      <button class="action-btn" id="saveSettingsBtn">Enregistrer</button>
+    </div>
+  </div>
 </body>
 </html>
