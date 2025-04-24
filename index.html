@@ -12,17 +12,18 @@
     <div class="modal-content">
       <h2>Informations de la compétition</h2>
       <label for="team1">Nom de l'équipe 1 :</label>
-      <input type="text" id="team1" placeholder="Doctorants I">
+      <input type="text" id="team1" placeholder="Candidat 1 ">
       <label for="team2">Nom de l'équipe 2 :</label>
-      <input type="text" id="team2" placeholder="Master II">
+      <input type="text" id="team2" placeholder="Candidat 2">
+      <input type="number" name="count" id="count" placeholder="compte par pas de ">
+
       <button id="startButton">Commencer</button>
     </div>
   </div>
-
   <!-- Contenu principal -->
   <div class="container">
     <div class="team">
-      <h2 id="team1Name">Doctorants I</h2>
+      <h2 id="team1Name">Candidat 1</h2>
       <div class="score">
         <button class="score-btn" onclick="changeScore('team1', -10)">-</button>
         <span id="team1Score">0</span>
@@ -33,15 +34,16 @@
     <div class="divider"></div>
 
     <div class="team">
-      <h2 id="team2Name">Master II</h2>
+      <h2 id="team2Name">Candidat 2</h2>
       <div class="score">
-        <button class="score-btn" onclick="changeScore('team2', -10)">-</button>
+        <button class="score-btn" onclick="changeScore('team2', '-')">-</button>
         <span id="team2Score">0</span>
-        <button class="score-btn" onclick="changeScore('team2', 10)">+</button>
+        <button class="score-btn" onclick="changeScore('team2', '+')">+</button>
       </div>
     </div>
   </div>
 
+  
   <!-- Question et bouton suivant -->
   <div class="question-section">
     <p id="question">Quelle est la première capitale du Mexique ?</p>
