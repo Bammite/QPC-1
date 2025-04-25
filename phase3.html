@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duel Final - Questions pour un Champion</title>
+  <style>
+    :root {
+      --red: #e63946;
+      --blue: #1d3557;
+      --light: #f1faee;
+      --gold: #ffd166;
+      --dark: #2b2d42;
+      --green: #2a9d8f;
+    }
+    
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .game-container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      height: 80vh;
+      position: relative;
+    }
+
+    .player {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .player-1 {
+      background: linear-gradient(90deg, rgba(29,53,87,0.8) 0%, rgba(29,53,87,0.2) 100%);
+    }
+
+    .player-2 {
+      background: linear-gradient(90deg, rgba(42,157,143,0.2) 0%, rgba(42,157,143,0.8) 100%);
+    }
+
+    .player.active {
+      box-shadow: inset 0 0 50px rgba(255, 209, 102, 0.3);
+    }
+
+    .player-name {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .player-score {
+      font-size: 5rem;
+      font-weight: bold;
+      color: var(--gold);
+    }
+
+    .divider {
+      width: 100px;
+      background-color: rgba(255, 255, 255, 0.2);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer-bar {
+      width: 40px;
+      height: 80%;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timer-fill {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(0deg, var(--red) 0%, var(--gold) 100%);
+      height: 100%;
+      transition: height 0.1s linear;
+    }
+
+    .point-markers {
+      position: absolute;
+      right: -30px;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .point-marker {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+    }
+
+    .point-marker.active {
+      background-color: var(--gold);
+      color: var(--dark);
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    button {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      backdrop-filter: blur(5px);
+      min-width: 150px;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,209,102,0.1) 0%, rgba(255,209,102,0) 100%);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s, left 0.3s;
+    }
+
+    .player-2.active ~ .highlight {
+      left: 50%;
+      background: linear-gradient(90deg, rgba(255,209,102,0) 0%, rgba(255,209,102,0.1) 100%);
+    }
+
+    .active .player-name {
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold);
+    }
+
+    .control-group {
+      display: flex;
+      /*flex-direction: column;*/
+      gap: 10px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse {
+      animation: pulse 1s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="highlight"></div>
+    
+    <div class="player player-1 active" id="player1">
+      <div class="player-name" id="player1Name">JOUEUR 1</div>
+      <div class="player-score" id="player1Score">0</div>
+    </div>
+    
+    <div class="divider">
+      <div class="timer-bar">
+        <div class="timer-fill" id="timerFill"></div>
+      </div>
+      <div class="point-markers">
+        <div class="point-marker" id="marker4">4</div>
+        <div class="point-marker" id="marker3">3</div>
+        <div class="point-marker" id="marker2">2</div>
+        <div class="point-marker" id="marker1">1</div>
+      </div>
+    </div>
+    
+    <div class="player player-2" id="player2">
+      <div class="player-name" id="player2Name">JOUEUR 2</div>
+      <div class="player-score" id="player2Score">0</div>
+    </div>
+    
+    <div class="controls">
+      <div class="control-group">
+        <button id="toggleTimerBtn">▶ DÉMARRER</button>
+        <button id="newRoundBtn">NOUVELLE MANCHE</button>
+        <button id="awardPointsBtn" disabled>ACCORDER POINTS</button>
+        <button id="switchPlayerBtn">PASSER MAIN</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Game state
+     // Game state
+     const game = {
+        players: [
+          { name: "JOUEUR 1", score: 0, active: true },
+          { name: "JOUEUR 2", score: 0, active: false }
+        ],
+        timer: 45,
+        timerInterval: null,
+        timerRunning: false,
+        currentPoints: 4,
+        canAwardPoints: false,
+        lastPointLevel: 4 // Nouveau: pour suivre le dernier niveau de points
+      };
+  
+      // ... (le reste des déclarations reste identique jusqu'à la fonction startTimer)
+  
+      // Start timer
+      function startTimer() {
+        if (game.timerInterval) clearInterval(game.timerInterval);
+        
+        game.timerRunning = true;
+        game.canAwardPoints = true;
+        game.lastPointLevel = 4; // Réinitialiser le suivi
+        elements.toggleTimerBtn.textContent = "❚❚ PAUSE";
+        elements.awardPointsBtn.disabled = false;
+        
+        game.timerInterval = setInterval(() => {
+          game.timer--;
+          updateTimerDisplay();
+          
+          // Calculate current points based on time left
+          let newPointLevel;
+          if (game.timer > 33) newPointLevel = 4;
+          else if (game.timer > 22) newPointLevel = 3;
+          else if (game.timer > 11) newPointLevel = 2;
+          else newPointLevel = 1;
+          
+          // Si le niveau de points a changé, on change de joueur
+          if (newPointLevel !== game.lastPointLevel) {
+            game.currentPoints = newPointLevel;
+            game.lastPointLevel = newPointLevel;
+            switchPlayer(); // Changement automatique de joueur
+          }
+          
+          updatePointMarkers();
+          
+          if (game.timer <= 0) {
+            clearInterval(game.timerInterval);
+            timeOut();
+          }
+        }, 1000);
+      }
+  
+
+    // DOM elements
+    const elements = {
+      player1: document.getElementById('player1'),
+      player2: document.getElementById('player2'),
+      player1Name: document.getElementById('player1Name'),
+      player2Name: document.getElementById('player2Name'),
+      player1Score: document.getElementById('player1Score'),
+      player2Score: document.getElementById('player2Score'),
+      timerFill: document.getElementById('timerFill'),
+      toggleTimerBtn: document.getElementById('toggleTimerBtn'),
+      switchPlayerBtn: document.getElementById('switchPlayerBtn'),
+      awardPointsBtn: document.getElementById('awardPointsBtn'),
+      newRoundBtn: document.getElementById('newRoundBtn'),
+      highlight: document.querySelector('.highlight'),
+      marker1: document.getElementById('marker1'),
+      marker2: document.getElementById('marker2'),
+      marker3: document.getElementById('marker3'),
+      marker4: document.getElementById('marker4')
+    };
+
+    // Initialize game
+    function initGame() {
+      // Set player names
+      const player1Name = prompt("Nom du Joueur 1:", "JOUEUR 1") || "JOUEUR 1";
+      const player2Name = prompt("Nom du Joueur 2:", "JOUEUR 2") || "JOUEUR 2";
+      
+      game.players[0].name = player1Name.toUpperCase();
+      game.players[1].name = player2Name.toUpperCase();
+      
+      updateDisplay();
+      resetTimer();
+    }
+
+    // Update display
+    function updateDisplay() {
+      elements.player1Name.textContent = game.players[0].name;
+      elements.player2Name.textContent = game.players[1].name;
+      elements.player1Score.textContent = game.players[0].score;
+      elements.player2Score.textContent = game.players[1].score;
+      
+      // Update active player
+      elements.player1.classList.toggle('active', game.players[0].active);
+      elements.player2.classList.toggle('active', game.players[1].active);
+      elements.highlight.style.opacity = game.players[0].active ? '1' : '1';
+      
+      // Update points markers
+      updatePointMarkers();
+      
+      // Update award points button state
+      elements.awardPointsBtn.disabled = !game.canAwardPoints;
+    }
+
+    // Update point markers
+    function updatePointMarkers() {
+      elements.marker1.classList.toggle('active', game.currentPoints >= 1);
+      elements.marker2.classList.toggle('active', game.currentPoints >= 2);
+      elements.marker3.classList.toggle('active', game.currentPoints >= 3);
+      elements.marker4.classList.toggle('active', game.currentPoints >= 4);
+    }
+
+   
+    // Pause timer
+    function pauseTimer() {
+      game.timerRunning = false;
+      clearInterval(game.timerInterval);
+      elements.toggleTimerBtn.textContent = "▶ DÉMARRER";
+    }
+
+    // Reset timer
+    function resetTimer() {
+      pauseTimer();
+      game.timer = 45;
+      game.currentPoints = 4;
+      game.canAwardPoints = false;
+      updateTimerDisplay();
+      updatePointMarkers();
+      elements.awardPointsBtn.disabled = true;
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+      const percentage = (game.timer / 45) * 100;
+      elements.timerFill.style.height = `${percentage}%`;
+    }
+
+    // Time out
+    function timeOut() {
+      pauseTimer();
+      game.canAwardPoints = false;
+      elements.awardPointsBtn.disabled = true;
+    }
+
+    // Toggle timer
+    function toggleTimer() {
+      if (game.timerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    // Switch player
+    function switchPlayer() {
+      game.players[0].active = !game.players[0].active;
+      game.players[1].active = !game.players[1].active;
+      updateDisplay();
+    }
+
+    // Award points to current player
+    function awardPoints() {
+      if (game.canAwardPoints) {
+        const activePlayer = game.players[0].active ? 0 : 1;
+        game.players[activePlayer].score += game.currentPoints;
+        game.canAwardPoints = false;
+        updateDisplay();
+        pauseTimer();
+        
+        // Automatically switch player after awarding points
+        switchPlayer();
+      }
+    }
+
+    // Start new round
+    function newRound() {
+      resetTimer();
+    }
+
+    // Event listeners
+    elements.toggleTimerBtn.addEventListener('click', toggleTimer);
+    elements.switchPlayerBtn.addEventListener('click', switchPlayer);
+    elements.awardPointsBtn.addEventListener('click', awardPoints);
+    elements.newRoundBtn.addEventListener('click', newRound);
+
+    // Start the game
+    window.addEventListener('load', initGame);
+  </script>
+</body>
+</html>
