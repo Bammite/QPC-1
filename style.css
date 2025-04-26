@@ -223,3 +223,6 @@ body {
     flex-direction: column;
   }
 }
+#question{
+ display: none;
+}
