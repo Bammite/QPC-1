@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="manage.css">
+    <title>Tableau de Bord - Génie en Herbe</title>
+</head>
+<body>
+    <div class="bcg">
+        <img src="assets/background.jpg" alt="Background">
+        <div class="filtre"></div>
+    </div>
+    <nav>
+        <h1>Gestion des Compétitions</h1>
+        <button id="backButton" class="hidden">Retour</button>
+    </nav>
+    <div class="contenaire">
+        <div class="sectionBouton">
+            <button class="option opt1" data-target="Solo">Mode Solo</button>
+            <button class="option opt2" data-target="Affrontement">Mode Affrontement</button>
+            <button class="option opt3" data-target="Presentation">Présentation Candidat</button>
+            <button class="option opt4" data-target="Jury">Présentation Jury</button>
+            <button class="option opt5" data-target="Podium">Podium</button>
+        </div>
+    
+        <section class="section hidden" id="Solo">
+            <h2>Mode Solo</h2>
+            <form id="soloForm" class="competition-form">
+                <div class="form-group">
+                    <label for="soloPhoto">Photo du participant</label>
+                    <input type="file" id="soloPhoto" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="soloProblematique">Problématique</label>
+                    <textarea id="soloProblematique" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="soloTemps">Temps alloué (en minutes)</label>
+                    <input type="number" id="soloTemps" min="1" required>
+                </div>
+                <button type="submit" class="btn-submit">Lancer la présentation</button>
+            </form>
+            <div id="soloDisplay" class="display-section"></div>
+        </section>
+
+        <section class="section hidden" id="Affrontement">
+            <h2>Mode Affrontement</h2>
+            <form id="affrontementForm" class="competition-form">
+                <div class="form-group">
+                    <label for="nbParticipants">Nombre de participants</label>
+                    <input type="number" id="nbParticipants" min="2" required>
+                </div>
+                <div class="form-group">
+                    <label for="pointsParQuestion">Points par question</label>
+                    <input type="number" id="pointsParQuestion" min="1" required>
+                </div>
+                <div id="participantsContainer"></div>
+                <button type="submit" class="btn-submit">Démarrer l'affrontement</button>
+            </form>
+            <div id="affrontementDisplay" class="display-section">
+                <div class="scores-container"></div>
+                <div class="timer"></div>
+            </div>
+        </section>
+
+        <section class="section hidden" id="Presentation">
+            <h2>Présentation Candidat</h2>
+            <form id="presentationForm" class="competition-form">
+                <div class="form-group">
+                    <label for="candidatName">Nom du candidat</label>
+                    <input type="text" id="candidatName" required>
+                </div>
+                <div class="form-group">
+                    <label for="candidatPhotos">Photos</label>
+                    <input type="file" id="candidatPhotos" multiple accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="candidatDesc">Description</label>
+                    <textarea id="candidatDesc" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Afficher la présentation</button>
+            </form>
+            <div id="presentationDisplay" class="display-section"></div>
+        </section>
+
+        <section class="section hidden" id="Jury">
+            <h2>Présentation du Jury</h2>
+            <form id="juryForm" class="competition-form">
+                <div class="form-group">
+                    <label for="nbJury">Nombre de membres du jury</label>
+                    <input type="number" id="nbJury" min="1" required>
+                </div>
+                <div id="juryMembersContainer"></div>
+                <button type="submit" class="btn-submit">Afficher le jury</button>
+            </form>
+            <div id="juryDisplay" class="display-section"></div>
+        </section>
+
+        <section class="section hidden" id="Podium">
+            <h2>Podium</h2>
+            <form id="podiumForm" class="competition-form">
+                <div class="form-group">
+                    <label for="firstPlace">Premier</label>
+                    <input type="text" id="firstPlace" required>
+                    <input type="file" id="firstPlacePhoto" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="secondPlace">Deuxième</label>
+                    <input type="text" id="secondPlace" required>
+                    <input type="file" id="secondPlacePhoto" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="thirdPlace">Troisième</label>
+                    <input type="text" id="thirdPlace" required>
+                    <input type="file" id="thirdPlacePhoto" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-submit">Afficher le podium</button>
+            </form>
+            <div id="podiumDisplay" class="display-section"></div>
+        </section>
+    </div>
+
+    <script src="manage.js"></script>
+</body>
+</html>

@@ -1,0 +1,627 @@
+/* Reset et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --text-color: #333;
+    --text-light: #777;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: var(--dark-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark-color);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Section Hero */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 0 20px;
+    animation: fadeInUp 1s ease;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Section Vocation */
+.vocation {
+    padding: 100px 0;
+    background-color: var(--light-color);
+}
+
+.vocation h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    position: relative;
+}
+
+.vocation h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--secondary-color);
+}
+
+.vocation-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.vocation-text {
+    flex: 1;
+}
+
+.vocation-text p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.vocation-image {
+    flex: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.vocation-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.vocation-image:hover img {
+    transform: scale(1.05);
+}
+
+/* Section Activités */
+.activites {
+    padding: 100px 0;
+    background-color: white;
+}
+
+.activites h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    position: relative;
+}
+
+.activites h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--secondary-color);
+}
+
+.activites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.activite-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.activite-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.activite-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: var(--secondary-color);
+}
+
+.activite-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.activite-card h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.activite-card p {
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.en-savoir-plus {
+    color: var(--secondary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.activite-card:hover .en-savoir-plus {
+    transform: translateX(5px);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 60px 0 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+.footer-section p {
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.footer-section i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .vocation-content {
+        flex-direction: column;
+    }
+    
+    .vocation-image {
+        order: -1;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin: 15px 0;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .btn-large {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    
+    .vocation h2, .activites h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Styles pour la sous-section Historique */
+.historique {
+    padding: 80px 0; /* Un peu moins de padding que les sections principales */
+    background-color: #f9f9f9; /* Une couleur de fond légèrement différente pour la distinguer */
+}
+
+.historique h3 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2rem; /* Légèrement plus petit que les h2 des sections principales */
+    color: var(--primary-color);
+    position: relative;
+}
+
+.historique h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* Un peu plus proche du titre */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px; /* Un peu plus court */
+    height: 3px; /* Un peu plus fin */
+    background-color: var(--accent-color); /* Utiliser la couleur d'accentuation pour varier */
+}
+
+.historique-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Cartes un peu plus larges si possible */
+    gap: 30px;
+}
+
+.evenement-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Pour que l'image respecte le border-radius */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex; /* Pour une meilleure structure interne si besoin */
+    flex-direction: column;
+}
+
+.evenement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.evenement-image {
+    width: 100%;
+    height: 200px; /* Hauteur fixe pour l'image pour uniformiser */
+    overflow: hidden;
+}
+
+.evenement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assure que l'image couvre la zone sans se déformer */
+    transition: transform 0.4s ease;
+}
+
+.evenement-card:hover .evenement-image img {
+    transform: scale(1.05); /* Léger zoom sur l'image au survol de la carte */
+}
+
+.evenement-content {
+    padding: 25px;
+    flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+    display: flex;
+    flex-direction: column;
+}
+
+.evenement-content h4 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.evenement-content p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    flex-grow: 1; /* Pousse le lien "En savoir plus" vers le bas */
+}
+
+.evenement-content .en-savoir-plus {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: none; /* Au cas où il hériterait d'une décoration */
+    transition: color 0.3s ease, transform 0.3s ease;
+    align-self: flex-start; /* Aligner le lien au début de son axe transversal */
+}
+
+.evenement-card:hover .en-savoir-plus {
+    color: var(--accent-color); /* Changer la couleur au survol de la carte */
+    transform: translateX(3px);
+}
+
+/* Ajustements responsives pour la section historique si nécessaire */
+@media (max-width: 768px) {
+    .historique-grid {
+        grid-template-columns: 1fr; /* Une colonne sur mobile */
+    }
+
+    .historique h3 {
+        font-size: 2rem;
+    }
+
+    .evenement-image {
+        height: 180px; /* Réduire un peu la hauteur de l'image sur mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .historique h3 {
+        font-size: 1.8rem;
+    }
+    .evenement-content h4 {
+        font-size: 1.15rem;
+    }
+    .evenement-content p {
+        font-size: 0.9rem;
+    }
+}

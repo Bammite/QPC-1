@@ -1,0 +1,263 @@
+/* Styles généraux */
+:root {
+    --primary-color: #ffc135;
+    --secondary-color: #2e231d;
+    --tertiary-color: #df1c1c;
+    --text-dark: #212529;
+    --white: #ffffff;
+    --max-width: 1200px;
+    --header-font-1: "Alfa Slab One", serif;
+    --header-font-2: "Bebas Neue", sans-serif;
+    --red: #e63946;
+    --blue: #1d3557;
+    --light: #f1faee;
+    --gold: #66baff;
+    --dark: #000000;
+    --green: #2a9d8f;
+    --gray: #dfdfdf;
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+
+}
+
+
+.bcg{
+    position: fixed;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+
+.bcg img{
+    position: fixed;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.bcg .filtre{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background-color: rgb(0, 0, 0,.5);
+}
+
+/* Navigation */
+nav {
+    background-color: var(--blue);
+    padding: 1rem;
+    color: var(--light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img {
+    height: 50px;
+}
+
+nav h1 {
+    font-size: 24px;
+}
+
+#backButton {
+    padding: 0.5rem 1rem;
+    background-color: var(--light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#backButton.visible {
+    display: block;
+}
+
+/* Sections de boutons */
+.sectionBouton {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.hidden-boutons {
+    transform: translateX(-100%);
+}
+
+/* Boutons */
+.option {
+    padding: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--blue);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.option:hover {
+    transform: translateY(-3px);
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Sections */
+.section {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: slideIn 0.3s ease forwards;
+}
+
+.section h2 {
+    color: var(--blue);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--gold);
+}
+
+/* Formulaires */
+.competition-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--gold);
+    outline: none;
+}
+
+/* Zone d'affichage */
+.display-section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Podium */
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.podium-place {
+    width: 120px;
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--gold);
+    color: white;
+    font-weight: bold;
+}
+
+#first {
+    height: 200px;
+    background-color: var(--gold);
+}
+
+#second {
+    height: 150px;
+    background-color: var(--gray);
+}
+
+#third {
+    height: 100px;
+    background-color: #cd7f32;
+}
+
+/* Buttons */
+.btn-submit {
+    background: var(--blue);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .podium-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
