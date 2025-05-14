@@ -3,426 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compétition - Défi en cours</title>
+    <title>Club Génie en Herbe - Culture Générale</title>
+    <!-- icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
     <style>
-        :root {
-            --primary-color: #4a6bff;
-            --secondary-color: #ff6b6b;
-            --background-color: #f8f9fa;
-            --text-color: #333;
-            --card-bg: #ffffff;
-            --border-radius: 10px;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition-time: 0.3s;
-            --accent-color: #4a6bff;
+        .footer-section a{
+            text-decoration: none;
+            background-color: transparent;
+        }
+        .footer-section a i{
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            height: 100vh;
+        .logo{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
-
-        .container {
-            display: flex;
-            flex: 1;
-            position: relative;
-        }
-
-        .player-section {
-            flex: 1;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            transition: opacity var(--transition-time);
-            background-color: var(--card-bg);
-            box-shadow: var(--box-shadow);
-        }
-
-        .player-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -50px;
-            width: 100px;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(248,249,250,0) 0%, var(--background-color) 100%);
-            z-index: 2;
-        }
-
-        .problem-section {
-            flex: 1;
-            padding: 30px;
-            background-color: var(--card-bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: opacity var(--transition-time);
-            box-shadow: var(--box-shadow);
-        }
-
-        .player-image {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .logo img{
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 0;
-            filter: brightness(0.9);
         }
-
-        .player-info {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .player-name {
-            font-size: 2.2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: white;
-            align-self: flex-start;
-            background-color: rgba(74, 107, 255, 0.8);
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .player-description-container {
-            margin-top: auto;
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            max-height: 40%;
-            backdrop-filter: blur(5px);
-            box-shadow: var(--box-shadow);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .player-description {
-            overflow-y: auto;
-            max-height: 100%;
-            line-height: 1.6;
-            padding-right: 10px;
-            color: var(--text-color);
-        }
-
-        .player-description::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .player-description::-webkit-scrollbar-thumb {
-            background-color: var(--primary-color);
-            border-radius: 3px;
-        }
-
-        .problem-title {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .problem-content {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            background-color: rgba(74, 107, 255, 0.05);
-            padding: 25px;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary-color);
-            box-shadow: var(--box-shadow);
-        }
-
-        .timer-container {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-
-        .timer {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--card-bg);
-            background-color: var(--primary-color);
-            padding: 15px 40px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-        }
-
-        .timer.warning {
-            background-color: #ffa502;
-        }
-
-        .timer.danger {
-            background-color: var(--secondary-color);
-            animation: pulse 0.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: translateX(-50%) scale(1);
-            }
-            to {
-                transform: translateX(-50%) scale(1.1);
-            }
-        }
-
-        .form-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(248, 249, 250, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .config-form {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            width: 100%;
-            box-shadow: var(--box-shadow);
-        }
-
-        .submit-btn:hover {
-            background-color: #3a5bef;
-            transform: translateY(-2px);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .player-section::before {
-                display: none;
-            }
-            
-            .timer {
-                font-size: 2rem;
-                padding: 10px 30px;
-            }
-        }
+        
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="player-section">
-            <img class="player-image" id="player-image" src="" alt="Photo du joueur">
-            <div class="player-info">
-                <h2 class="player-name" id="player-name">Nom du Joueur</h2>
-                <div class="player-description-container">
-                    <div class="player-description" id="player-description">
-                        Description du joueur...
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo"><img src="./assets/icone.JPG" alt=""></a>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#vocation">Notre Vocation</a></li>
+                <li><a href="#activites">Activités</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Accueil -->
+    <section id="accueil" class="hero">
+        <div class="slideshow">
+            <div class="slide active" style="background-image: url('./assets/final.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/IMG_1687.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/IMG_1692.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/IMG_1691.jpg')"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Bienvenue au Club de culture generale de l'UGB</h1>
+            <p>Développez votre culture générale et testez vos connaissances dans une ambiance conviviale</p>
+            <a href="./dashbord/manage.html" class="btn btn-large">Accéder au tableau de bord</a>
+        </div>
+    </section>
+
+    <!-- Section Notre Vocation -->
+    <section id="vocation" class="vocation">
+        <div class="container">
+            <h2>Notre Vocation</h2>
+            <div class="vocation-content">
+                <div class="vocation-text">
+                    <p>Fondé en 2010, le Club Génie en Herbe a pour mission de promouvoir la culture générale et l'esprit de compétition saine parmi les jeunes et les moins jeunes.</p>
+                    <p>Nous croyons que la connaissance est un trésor à partager, et nos compétitions sont conçues pour stimuler la curiosité intellectuelle tout en s'amusant.</p>
+                    <p>Notre club rassemble des passionnés de tous horizons, unis par l'amour du savoir et du défi intellectuel.</p>
+                </div>
+                <div class="vocation-image">
+                    <img src="./assets/membres.jpg" alt="Membres du club">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Activités -->
+    <section id="activites" class="activites">
+        <div class="container">
+            <h2>Nos Activités</h2>
+            
+            <!-- Sous-section Activités Courantes -->
+            <div class="activites-courantes">
+                <h3>Ce que nous proposons</h3>
+                <div class="activites-grid">
+                    <div class="activite-card">
+                        <div class="activite-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h4>Compétitions Mensuelles</h4>
+                        <p>Affrontez d'autres passionnés lors de nos tournois mensuels de culture générale.</p>
+                    </div>
+                    <div class="activite-card">
+                        <div class="activite-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Génie en Herbe</h4>
+                        <p>Participez à nos célèbres matchs de Génie en Herbe en équipe de 4 joueurs.</p>
+                    </div>
+                    <div class="activite-card">
+                        <div class="activite-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h4>Ateliers Thématiques</h4>
+                        <p>Approfondissez vos connaissances avec nos ateliers mensuels sur des thèmes variés.</p>
+                    </div>
+                    <div class="activite-card">
+                        <div class="activite-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Formations</h4>
+                        <p>Apprenez les techniques pour améliorer votre culture générale et votre rapidité.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sous-section Historique -->
+            <div class="historique">
+                <h3>Notre Historique d'Événements</h3>
+                <div class="historique-grid">
+                    <div class="evenement-card" onclick="window.location.href='evenement1.html'">
+                        <div class="evenement-image">
+                            <img src="./assets/compet.jpg" alt="Finale 2022">
+                        </div>
+                        <div class="evenement-content">
+                            <h4>Finale Nationale 2022</h4>
+                            <p>Revivez les moments forts de notre grande finale nationale avec 32 équipes en compétition.</p>
+                            <span class="en-savoir-plus">En savoir plus →</span>
+                        </div>
+                    </div>
+                    <div class="evenement-card" onclick="window.location.href='evenement2.html'">
+                        <div class="evenement-image">
+                            <img src="./assets/activism.JPG" alt="Tournoi Jeunes">
+                        </div>
+                        <div class="evenement-content">
+                            <h4>16 jours d'activisme</h4>
+                            <p>LES VIOLENCES BASÉES SUR LE GENRE EN MILIEU UNIVERSITAIRE SONT UN
+VERITABLE FREIN À L'EPANOUISSEMENT.</p>
+                            <span class="en-savoir-plus">En savoir plus →</span>
+                        </div>
+                    </div>
+                    <div class="evenement-card" onclick="window.location.href='evenement3.html'">
+                        <div class="evenement-image">
+                            <img src="./assets/atelier.jpg" alt="Atelier Histoire">
+                        </div>
+                        <div class="evenement-content">
+                            <h4>Atelier Spécial Histoire 2020</h4>
+                            <p>Retour sur notre atelier le plus populaire consacré aux grandes dates historiques.</p>
+                            <span class="en-savoir-plus">En savoir plus →</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="problem-section">
-            <h3 class="problem-title">Problématique</h3>
-            <div class="problem-content" id="problem-content">
-                La problématique à résoudre apparaîtra ici...
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Club Génie en Herbe</h3>
+                    <p>Promouvons la culture générale et l'esprit de compétition intellectuelle depuis 2010.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> contact@clubgenieenherbe.sn</p>
+                    <p><i class="fas fa-phone"></i> +221 77 182 23 58</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Réseaux sociaux</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61570021480884&mibextid=wwXIfr&mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/ccgugb1?s=21"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/club_de_culture_generale_ugb?igsh=cHUxZjVpMGc1Zzc3"><i class="fab fa-instagram"></i></a>
+                        <a href="chat.whatsapp.com/HxL8UDGZM5z5M4K8XBA87E"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Club Génie en Herbe. Tous droits réservés.</p>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <div class="timer-container">
-        <div class="timer" id="timer">02:00</div>
-    </div>
-
-    <div class="form-overlay" id="form-overlay">
-        <div class="config-form">
-            <h1>Configuration du Défi</h1>
-            <form id="competition-form">
-                <div class="form-group">
-                    <label for="player-name-input">Nom du Joueur</label>
-                    <input type="text" id="player-name-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="player-image-url">URL de l'image du joueur</label>
-                    <input type="url" id="player-image-url" required placeholder="https://example.com/image.jpg">
-                </div>
-                <div class="form-group">
-                    <label for="player-description-input">Description du Joueur</label>
-                    <textarea id="player-description-input" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="problem-input">Problématique</label>
-                    <textarea id="problem-input" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="time-input">Durée (en secondes)</label>
-                    <input type="number" id="time-input" value="120" min="10" required>
-                </div>
-                <button type="submit" class="submit-btn">Commencer le Défi</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const formOverlay = document.getElementById('form-overlay');
-            const competitionForm = document.getElementById('competition-form');
-            const timer = document.getElementById('timer');
-            const playerName = document.getElementById('player-name');
-            const playerDescription = document.getElementById('player-description');
-            const playerImage = document.getElementById('player-image');
-            const problemContent = document.getElementById('problem-content');
-            
-            let timeLeft;
-            let timerInterval;
-            let isPaused = true;
-            let totalTime;
-
-            competitionForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Récupérer les valeurs du formulaire
-                const name = document.getElementById('player-name-input').value;
-                const description = document.getElementById('player-description-input').value;
-                const problem = document.getElementById('problem-input').value;
-                const imageUrl = document.getElementById('player-image-url').value;
-                totalTime = parseInt(document.getElementById('time-input').value);
-                
-                // Mettre à jour l'interface
-                playerName.textContent = name;
-                playerDescription.textContent = description;
-                playerImage.src = imageUrl;
-                problemContent.textContent = problem;
-                timeLeft = totalTime;
-                updateTimerDisplay();
-                
-                // Masquer le formulaire
-                formOverlay.style.display = 'none';
-                
-                // Initialiser le timer (en pause au début)
-                isPaused = true;
-            });
-
-            timer.addEventListener('click', function() {
-                if (isPaused) {
-                    // Démarrer le timer
-                    isPaused = false;
-                    if (!timerInterval) {
-                        timerInterval = setInterval(updateTimer, 1000);
-                    }
-                } else {
-                    // Mettre en pause le timer
-                    isPaused = true;
-                }
-            });
-
-            function updateTimer() {
-                if (!isPaused) {
-                    timeLeft--;
-                    updateTimerDisplay();
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        timer.textContent = "00:00";
-                        timer.classList.add('danger');
-                    } else if (timeLeft <= 10) {
-                        timer.classList.remove('warning');
-                        timer.classList.add('danger');
-                    } else if (timeLeft <= 30) {
-                        timer.classList.add('warning');
-                    }
-                }
-            }
-
-            function updateTimerDisplay() {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-
-            // Initialiser le timer avec 2 minutes par défaut
-            timeLeft = 120;
-            totalTime = 120;
-            updateTimerDisplay();
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
