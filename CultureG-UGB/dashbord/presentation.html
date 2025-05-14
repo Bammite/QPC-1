@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="presentation.css">
+    <title>Acteurs de l'événement</title>
+    <style></style>
+</head>
+<body>
+    <div class="container">
+        <div class="actor-section">
+            <img class="actor-image" id="actor-image" src="" alt="Photo de l'acteur">
+            <div class="actor-info">
+                <h2 class="actor-name" id="actor-name">Nom de l'acteur</h2>
+                <div class="actor-role-container">
+                    <div class="actor-role" id="actor-role">
+                        Rôle de l'acteur...
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="details-section">
+            <h3 class="details-title">Description</h3>
+            <div class="actor-description" id="actor-description">
+                La description de l'acteur apparaîtra ici...
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-container">
+        <button class="nav-btn" id="prev-btn">←</button>
+        <div class="actor-counter" id="actor-counter">1/1</div>
+        <button class="nav-btn" id="next-btn">→</button>
+    </div>
+
+    <div class="form-overlay" id="form-overlay">
+        <div class="config-form">
+            <h1>Configuration des Acteurs</h1>
+            <form id="actors-form">
+                <div class="form-group">
+                    <label for="actor-type">Type d'acteur</label>
+                    <select id="actor-type" required>
+                        <option value="">-- Sélectionnez un type --</option>
+                        <option value="candidat">Candidat</option>
+                        <option value="partenaire">Partenaire</option>
+                        <option value="jury">Jury</option>
+                        <option value="organisation">Membre de l'organisation</option>
+                    </select>
+                </div>
+                
+                <div id="actors-container">
+                    <!-- Les champs pour chaque acteur seront ajoutés ici dynamiquement -->
+                </div>
+                
+                <button type="button" class="add-actor-btn" id="add-actor-btn">+ Ajouter un acteur</button>
+                
+                <button type="submit" class="submit-btn">Afficher les Acteurs</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formOverlay = document.getElementById('form-overlay');
+            const actorsForm = document.getElementById('actors-form');
+            const actorsContainer = document.getElementById('actors-container');
+            const addActorBtn = document.getElementById('add-actor-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const actorCounter = document.getElementById('actor-counter');
+            
+            const actorName = document.getElementById('actor-name');
+            const actorRole = document.getElementById('actor-role');
+            const actorImage = document.getElementById('actor-image');
+            const actorDescription = document.getElementById('actor-description');
+            const actorRoleContainer = document.querySelector('.actor-role-container');
+            
+            let actors = [];
+            let currentActorIndex = 0;
+            let actorType = '';
+
+            // Ajouter un acteur au formulaire
+            addActorBtn.addEventListener('click', function() {
+                const actorIndex = actorsContainer.children.length;
+                
+                const actorFields = document.createElement('div');
+                actorFields.className = 'actor-fields';
+                actorFields.innerHTML = `
+                    <h3>Acteur #${actorIndex + 1}</h3>
+                    <div class="form-group">
+                        <label for="actor-name-${actorIndex}">Nom</label>
+                        <input type="text" id="actor-name-${actorIndex}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="actor-image-${actorIndex}">Photo</label>
+                        <input type="file" id="actor-image-${actorIndex}" accept="image/*" required>
+                        <img id="actor-image-preview-${actorIndex}" class="image-preview" src="#" alt="Aperçu de l'image">
+                    </div>
+                    <div class="form-group">
+                        <label for="actor-role-${actorIndex}">Rôle</label>
+                        <input type="text" id="actor-role-${actorIndex}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="actor-description-${actorIndex}">Description</label>
+                        <textarea id="actor-description-${actorIndex}" required></textarea>
+                    </div>
+                `;
+                
+                actorsContainer.appendChild(actorFields);
+                
+                // Afficher l'aperçu de l'image
+                document.getElementById(`actor-image-${actorIndex}`).addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById(`actor-image-preview-${actorIndex}`).src = e.target.result;
+                            document.getElementById(`actor-image-preview-${actorIndex}`).style.display = 'block';
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+
+            // Soumission du formulaire
+            actorsForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                actorType = document.getElementById('actor-type').value;
+                const actorFields = actorsContainer.querySelectorAll('.actor-fields');
+                
+                actors = [];
+                
+                actorFields.forEach((field, index) => {
+                    const name = document.getElementById(`actor-name-${index}`).value;
+                    const role = document.getElementById(`actor-role-${index}`).value;
+                    const description = document.getElementById(`actor-description-${index}`).value;
+                    const imageFile = document.getElementById(`actor-image-${index}`).files[0];
+                    
+                    if (imageFile) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            actors.push({
+                                name,
+                                role,
+                                description,
+                                image: e.target.result
+                            });
+                            
+                            // Si c'est le dernier acteur, afficher le premier
+                            if (actors.length === actorFields.length) {
+                                displayActor(0);
+                                formOverlay.style.display = 'none';
+                                updateCounter();
+                            }
+                        }
+                        reader.readAsDataURL(imageFile);
+                    }
+                });
+            });
+
+            // Navigation entre les acteurs
+            prevBtn.addEventListener('click', function() {
+                if (actors.length > 0) {
+                    const prevIndex = (currentActorIndex - 1 + actors.length) % actors.length;
+                    animateTransition(currentActorIndex, prevIndex, 'left');
+                    currentActorIndex = prevIndex;
+                    updateCounter();
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (actors.length > 0) {
+                    const nextIndex = (currentActorIndex + 1) % actors.length;
+                    animateTransition(currentActorIndex, nextIndex, 'right');
+                    currentActorIndex = nextIndex;
+                    updateCounter();
+                }
+            });
+
+            // Afficher un acteur
+            function displayActor(index) {
+                if (actors[index]) {
+                    const actor = actors[index];
+                    
+                    // Transition fluide pour tous les éléments
+                    [actorName, actorRole, actorDescription].forEach(element => {
+                        element.style.transition = 'opacity 0.3s ease-in-out';
+                    });
+                    
+                    actorName.textContent = actor.name;
+                    actorRole.textContent = actor.role;
+                    actorDescription.textContent = actor.description;
+                    actorImage.src = actor.image;
+                }
+            }
+
+            // Animation de transition
+            function animateTransition(oldIndex, newIndex, direction) {
+                const elements = [actorImage, actorName, actorRoleContainer, actorDescription];
+                
+                // Masquer l'ancien acteur avec animation
+                elements.forEach(element => {
+                    element.style.opacity = '0';
+                    element.classList.add(direction === 'left' ? 'slide-out-right' : 'slide-out-left');
+                });
+                
+                // Après l'animation de sortie
+                setTimeout(() => {
+                    // Réinitialiser les animations
+                    elements.forEach(element => {
+                        element.classList.remove('slide-out-left', 'slide-out-right');
+                    });
+                    
+                    // Afficher le nouvel acteur
+                    displayActor(newIndex);
+                    
+                    // Ajouter l'animation d'entrée
+                    elements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.classList.add(direction === 'left' ? 'slide-in-left' : 'slide-in-right');
+                    });
+                    
+                    // Nettoyer les classes d'animation
+                    setTimeout(() => {
+                        elements.forEach(element => {
+                            element.classList.remove('slide-in-left', 'slide-in-right');
+                        });
+                    }, 500);
+                }, 500);
+            }
+
+            // Mettre à jour le compteur
+            function updateCounter() {
+                actorCounter.textContent = `${currentActorIndex + 1}/${actors.length}`;
+            }
+
+            // Ajouter un premier acteur par défaut
+            addActorBtn.click();
+        });
+    </script>
+</body>
+</html>

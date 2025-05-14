@@ -261,3 +261,11 @@ nav h1 {
         align-items: center;
     }
 }
+
+.option{
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}

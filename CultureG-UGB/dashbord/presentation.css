@@ -1,0 +1,389 @@
+
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition-time: 0.3s;
+            --accent-color: #4a6bff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        .actor-section {
+            flex: 1;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: opacity var(--transition-time);
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+        }
+
+        .actor-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(248,249,250,0) 0%, var(--background-color) 100%);
+            z-index: 2;
+        }
+
+        .details-section {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: opacity var(--transition-time);
+            box-shadow: var(--box-shadow);
+        }
+
+        .actor-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.9);
+            transition: transform 0.5s ease;
+        }
+
+        .actor-info {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .actor-name {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+            align-self: flex-start;
+            background-color: rgba(74, 107, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .actor-role-container {
+            margin-top: auto;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            max-height: 40%;
+            backdrop-filter: blur(5px);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .actor-role {
+            overflow-y: auto;
+            max-height: 100%;
+            line-height: 1.6;
+            padding-right: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .actor-role::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .actor-role::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .details-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .actor-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background-color: rgba(74, 107, 255, 0.0);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--box-shadow);
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+
+        .navigation-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--card-bg);
+            background-color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .nav-btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        .actor-counter {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            background-color: var(--card-bg);
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 249, 250, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .config-form {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: var(--box-shadow);
+        }
+
+        .submit-btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            display: none;
+            border-radius: var(--border-radius);
+        }
+
+        .actor-fields {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: rgba(74, 107, 255, 0.05);
+        }
+
+        .actor-fields h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .add-actor-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .add-actor-btn:hover {
+            background-color: #e05555;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .actor-section::before {
+                display: none;
+            }
+            
+            .nav-btn {
+                font-size: 1.2rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Animation */
+        .slide-out-left {
+            animation: slideOutLeft 0.5s forwards;
+        }
+
+        .slide-out-right {
+            animation: slideOutRight 0.5s forwards;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.5s forwards;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s forwards;
+        }
+
+        @keyframes slideOutLeft {
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideOutRight {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    .actor-image, .actor-name, .actor-role-container, .actor-description {
+    transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+}
