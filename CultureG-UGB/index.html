@@ -6,7 +6,7 @@
     <title>Club Génie en Herbe - Culture Générale</title>
     <!-- icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.0">
 
     <style>
         .footer-section a{
@@ -20,15 +20,19 @@
         }
 
         .logo{
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            font-size: 12px;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: black;
         }
         .logo img{
-            width: 100%;
-            height: 100%;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
+            border-radius: 50%;
+            margin: 0 5px;
         }
         
     </style>
@@ -37,7 +41,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo"><img src="./assets/icone.JPG" alt=""></a>
+            <a href="#" class="logo"><img src="./assets/icone.JPG" alt="">Club de culture generale de <br> l'UGB</a>
             <ul class="nav-links">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#vocation">Notre Vocation</a></li>
@@ -54,10 +58,23 @@
     <!-- Section Accueil -->
     <section id="accueil" class="hero">
         <div class="slideshow">
-            <div class="slide active" style="background-image: url('./assets/final.jpg')"></div>
-            <div class="slide" style="background-image: url('./assets/IMG_1687.jpg')"></div>
+            <div class="slide active" style="background-image: url('./assets/quesitionpourChampion.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/final.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/DSC_0032.jpg')"></div>
             <div class="slide" style="background-image: url('./assets/IMG_1692.jpg')"></div>
             <div class="slide" style="background-image: url('./assets/IMG_1691.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/_OUZ2882.jpeg')"></div>
+            <div class="slide" style="background-image: url('./assets/_OUZ2922.jpeg')"></div>
+            <div class="slide" style="background-image: url('./assets/DSC_1692.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/_OUZ2931.jpeg')"></div>
+            <div class="slide" style="background-image: url('./assets/DSC_1703.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/_OUZ3162.jpeg')"></div>
+            <div class="slide" style="background-image: url('./assets/DSC_2244.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/_OUZ3201.jpeg')"></div>
+            <div class="slide" style="background-image: url('./assets/OUZ_5071.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/OUZ_5224.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/DSC_2282.jpg')"></div>
+            <div class="slide" style="background-image: url('./assets/IMG_1687.jpg')"></div>
         </div>
         <div class="hero-content">
             <h1>Bienvenue au Club de culture generale de l'UGB</h1>
@@ -129,11 +146,21 @@
                 <div class="historique-grid">
                     <div class="evenement-card" onclick="window.location.href='evenement1.html'">
                         <div class="evenement-image">
-                            <img src="./assets/compet.jpg" alt="Finale 2022">
+                            <img src="./assets/quesitionpourChampion.jpg" alt="Question pour un champion ugb">
                         </div>
                         <div class="evenement-content">
-                            <h4>Finale Nationale 2022</h4>
-                            <p>Revivez les moments forts de notre grande finale nationale avec 32 équipes en compétition.</p>
+                            <h4>Question pour un champion UGB</h4>
+                            <p>Revivez les moments forts de notre grande finale de Question pour un champion avec 32 équipes en compétition.</p>
+                            <span class="en-savoir-plus">En savoir plus →</span>
+                        </div>
+                    </div>
+                    <div class="evenement-card" onclick="window.location.href='evenement1.html'">
+                        <div class="evenement-image">
+                            <img src="./assets/course.jpeg" alt="Finale 2022">
+                        </div>
+                        <div class="evenement-content">
+                            <h4>LANGAA BURI</h4>
+                            <p>Revivez en images les moments de la première édition du LANGAA BURI du Club de culture générale de l’UGB.</p>
                             <span class="en-savoir-plus">En savoir plus →</span>
                         </div>
                     </div>
@@ -157,6 +184,69 @@ VERITABLE FREIN À L'EPANOUISSEMENT.</p>
                             <p>Retour sur notre atelier le plus populaire consacré aux grandes dates historiques.</p>
                             <span class="en-savoir-plus">En savoir plus →</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Partenaires -->
+    <section class="partenaires">
+        <div class="container">
+            <h2>Nos Partenaires</h2>
+            <div class="partenaires-slider">
+                <div class="slider-container">
+                    <!-- Dupliquer les logos pour créer un effet de défilement infini -->
+                    <div class="slider-track">
+                        <!-- Ajoutez vos logos de partenaires ici -->
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        <div class="partenaire-logo">
+                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
+                        </div>
+                        
+                        
+                        </div>
+                        <!-- Répétez pour chaque partenaire -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Mot du Président -->
+    <section class="mot-president">
+        <div class="container">
+            <h2>Mot du Président</h2>
+            <div class="president-content">
+                <div class="president-image">
+                    <img src="./assets/DSC_2039.jpg" alt="Photo du président">
+                </div>
+                <div class="president-text">
+                    <h3>Message de notre Président</h3>
+                    <p>Chers membres et amis du Club de Culture Générale,</p>
+                    <p>C'est avec beaucoup de fierté que je m'adresse à vous en tant que Président de ce merveilleux club. Notre mission est de promouvoir la culture générale et l'excellence académique au sein de notre université.</p>
+                    <p>Depuis notre création, nous nous efforçons de créer un environnement stimulant où la connaissance et le partage sont au cœur de nos activités. Nos différents événements et compétitions témoignent de cet engagement constant.</p>
+                    <p>Je vous invite à nous rejoindre dans cette belle aventure intellectuelle et à participer activement à nos activités.</p>
+                    <div class="president-signature">
+                        <strong>Le Président</strong><br>
+                        Sydia
                     </div>
                 </div>
             </div>
@@ -192,6 +282,6 @@ VERITABLE FREIN À L'EPANOUISSEMENT.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.0"></script>
 </body>
 </html>

@@ -428,6 +428,110 @@ body {
     }
 }
 
+/* Section Partenaires */
+.partenaires {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.partenaires h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.partenaires-slider {
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.slider-container {
+    width: 100%;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    align-items: center;
+}
+
+
+.partenaires .container{
+    width: 100%;
+    max-width: 2000px;
+}
+.partenaire-logo {
+    min-width: 200px;
+    padding: 0 20px;
+
+}
+
+.partenaire-logo img {
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Section Mot du Président */
+.mot-president {
+    padding: 80px 0;
+    background-color: var(--light-color);
+}
+
+.mot-president h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--primary-color);
+}
+
+.president-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.president-image {
+    flex: 0 0 300px;
+}
+
+.president-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.president-text {
+    flex: 1;
+}
+
+.president-text h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.president-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.president-signature {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--secondary-color);
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .vocation-content {
