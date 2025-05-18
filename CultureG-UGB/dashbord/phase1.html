@@ -3,329 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Culture Générale</title>
-  <style>
-    :root {
-      --primary-color: #4a6bff;
-      --secondary-color: #ff6b6b;
-      --background-color: #f8f9fa;
-      --text-color: #333;
-      --card-bg: #ffffff;
-      --border-radius: 10px;
-      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      min-height: 100vh;
-    }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    
-    .team-image {
-      width: 100%;
-      height: 200px;
-      margin: 0;
-      overflow: hidden;
-
-    }
-
-    .team-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .team-card {
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      overflow: hidden;
-      width: 380px;
-      text-align: center;
-      transition: transform 0.3s ease;
-      height: 500px;
-    }
-    
-    .team-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .team-name {
-      padding: 20px;
-      font-size: 24px;
-      margin-bottom: 20px;
-      font-weight: 600;
-      color: var(--primary-color);
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .score-display {
-      font-size: 72px;
-      font-weight: bold;
-      margin: 20px 0;
-      color: var(--secondary-color);
-    }
-    
-    .score-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    
-    .score-btn {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: none;
-      background-color: var(--primary-color);
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s;
-    }
-    
-    .score-btn:hover {
-      background-color: #3a5bef;
-    }
-    
-    .score-btn.minus {
-      background-color: var(--secondary-color);
-    }
-    
-    .score-btn.minus:hover {
-      background-color: #e05a5a;
-    }
-    
-    .question-section {
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 30px;
-      max-width: 800px;
-      margin: 0 auto 30px;
-      text-align: center;
-    }
-    
-    .question-text {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .action-btn {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: var(--border-radius);
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin: 5px;
-    }
-    
-    .action-btn:hover {
-      background-color: #3a5bef;
-    }
-    
-    .action-btn.secondary {
-      background-color: #6c757d;
-    }
-    
-    .action-btn.secondary:hover {
-      background-color: #5a6268;
-    }
-    
-    .timer-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 15px;
-      display: none;
-    }
-    
-    .timer-display {
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-    }
-    
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      overflow:scroll;
-    }
-    
-    .modal-content {
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 30px;
-      width: 90%;
-      max-width: 600px;
-    }
-    
-    .modal-title {
-      text-align: center;
-      margin-bottom: 20px;
-      color: var(--primary-color);
-    }
-    
-    .input-group {
-      margin-bottom: 15px;
-    }
-    
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-    
-    .input-group input, 
-    .input-group select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: var(--border-radius);
-      font-size: 16px;
-    }
-    
-    .settings-row {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    
-    .settings-col {
-      flex: 1;
-    }
-    
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .team-card {
-        width: 80%;
-      }
-      
-      .settings-row {
-        flex-direction: column;
-      }
-    }
-  </style>
+  <title>Affrontement</title>
+  <link rel="stylesheet" href="./css/phase1.css">
+  <style></style>
 </head>
 <body>
-  <!-- Timer -->
-  <div class="timer-container" id="timerContainer">
-    <div class="timer-display" id="timerDisplay">00:00</div>
-    <button class="action-btn secondary" id="stopTimerBtn">Arrêter</button>
-  </div>
-
-  <!-- Header -->
-  <div class="header">
-    <h1>Quiz Culture Générale</h1>
+  <!-- Menu Button -->
+  <button class="menu-btn" id="menuBtn">⋯</button>
+  <div class="menu-options" id="menuOptions">
+    <button id="settingsBtn">Paramètres</button>
+    <button id="resetBtn">Réinitialiser les scores</button>
+    <button id="fullscreenBtn">Plein écran</button>
   </div>
 
   <!-- Teams Container -->
-  <div class="container" id="teamsContainer">
+  <div class="teams-container" id="teamsContainer">
     <!-- Teams will be added dynamically -->
-  </div>
-
-  <!-- Question Section -->
-  <div class="question-section">
-    <p class="question-text" id="question">Prêt à commencer ? Configurez d'abord le quiz.</p>
-    <div>
-      <button class="action-btn" id="nextQuestionBtn" disabled>Question suivante</button>
-      <button class="action-btn secondary" id="settingsBtn">Paramètres</button>
-      <button class="action-btn secondary" id="timerBtn">Démarrer Timer</button>
-      <button class="action-btn secondary" id="resetBtn">Réinitialiser</button>
-    </div>
   </div>
 
   <!-- Settings Modal -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
-      <h2 class="modal-title">Paramètres du Quiz</h2>
+      <h2 class="modal-title">Paramètres</h2>
       
       <div class="settings-row">
         <div class="settings-col">
           <div class="input-group">
-            <label for="teamCount">Nombre d'équipes:</label>
-            <select id="teamCount">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <label for="team1">Équipe 1:</label>
+            <input type="text" id="team1" placeholder="Nom de l'équipe 1">
           </div>
         </div>
         <div class="settings-col">
           <div class="input-group">
-            <label for="pointValue">Valeur des points:</label>
-            <input type="number" id="pointValue" value="1" min="1">
+            <label for="team2">Équipe 2:</label>
+            <input type="text" id="team2" placeholder="Nom de l'équipe 2">
           </div>
         </div>
       </div>
       
-      <div id="teamInputs">
-        <div class="input-group">
-          <label for="team1">Équipe 1:</label>
-          <input type="text" id="team1" placeholder="Nom de l'équipe 1">
-          <label for="team1Image">Photo de l'équipe:</label>
-          <input type="file" id="team1Image" accept="image/*">
+      <div class="settings-row">
+        <div class="settings-col">
+          <div class="input-group">
+            <label for="team1Image">Photo Équipe 1:</label>
+            <input type="file" id="team1Image" accept="image/*">
+          </div>
         </div>
-        <div class="input-group">
-          <label for="team2">Équipe 2:</label>
-          <input type="text" id="team2" placeholder="Nom de l'équipe 2">
-          <label for="team2Image">Photo de l'équipe:</label>
-          <input type="file" id="team2Image" accept="image/*">
+        <div class="settings-col">
+          <div class="input-group">
+            <label for="team2Image">Photo Équipe 2:</label>
+            <input type="file" id="team2Image" accept="image/*">
+          </div>
         </div>
       </div>
       
       <div class="input-group">
-        <label>
-          <input type="checkbox" id="enableTimer"> Activer le timer
-        </label>
-      </div>
-      
-      <div class="input-group" id="timerSettings" style="display: none;">
-        <label for="timerDuration">Durée (minutes):</label>
-        <input type="number" id="timerDuration" value="5" min="1">
+        <label for="pointValue">Valeur des points:</label>
+        <input type="number" id="pointValue" value="1" min="1">
       </div>
       
       <button class="action-btn" id="saveSettingsBtn">Enregistrer</button>
@@ -335,89 +68,59 @@
   <script>
     // Game state
     const gameState = {
-      teams: [],
-      scores: {},
-      currentQuestion: 0,
-      pointValue: 1,
-      timerEnabled: false,
-      timerDuration: 5,
-      timerInterval: null,
-      timeRemaining: 0,
-      questions: [
-        "Quelle est la première capitale du Mexique ?",
-        "Qui a écrit Les Misérables ?",
-        "Quelle est la formule chimique de l'eau ?",
-        "Quel est le plus grand océan du monde ?",
-        "Quelle est la capitale de l'Australie ?",
-        "Qui a peint la Joconde ?",
-        "Quel est le symbole chimique de l'or ?",
-        "Combien de continents y a-t-il sur Terre ?",
-        "Quelle est la plus longue rivière d'Afrique ?",
-        "Qui a découvert la pénicilline ?"
+      teams: [
+        { id: 'team1', name: 'Équipe 1' },
+        { id: 'team2', name: 'Équipe 2' }
       ],
+      scores: {
+        team1: 0,
+        team2: 0
+      },
+      pointValue: 1,
       teamImages: {},
     };
 
     // DOM Elements
     const teamsContainer = document.getElementById('teamsContainer');
-    const teamInputs = document.getElementById('teamInputs');
-    const teamCountSelect = document.getElementById('teamCount');
     const settingsModal = document.getElementById('settingsModal');
     const settingsBtn = document.getElementById('settingsBtn');
     const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-    const nextQuestionBtn = document.getElementById('nextQuestionBtn');
-    const questionElement = document.getElementById('question');
-    const pointValueInput = document.getElementById('pointValue');
-    const enableTimerCheckbox = document.getElementById('enableTimer');
-    const timerSettings = document.getElementById('timerSettings');
-    const timerDurationInput = document.getElementById('timerDuration');
-    const timerContainer = document.getElementById('timerContainer');
-    const timerDisplay = document.getElementById('timerDisplay');
-    const timerBtn = document.getElementById('timerBtn');
-    const stopTimerBtn = document.getElementById('stopTimerBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuOptions = document.getElementById('menuOptions');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
 
     // Initialize the game
     function initGame() {
       renderTeams();
-      updateQuestion();
-      
-      // Load questions from localStorage if available
-      const savedQuestions = localStorage.getItem('quizQuestions');
-      if (savedQuestions) {
-        try {
-          gameState.questions = JSON.parse(savedQuestions);
-        } catch (e) {
-          console.error("Failed to parse saved questions", e);
-        }
-      } 
     }
 
-    // Render teams based on current count
+    // Render teams
     function renderTeams() {
       teamsContainer.innerHTML = '';
       
-      for (let i = 0; i < gameState.teams.length; i++) {
-        const team = gameState.teams[i];
+      gameState.teams.forEach((team, index) => {
         const score = gameState.scores[team.id] || 0;
-        const teamImage = gameState.teamImages[team.id] || 'placeholder.jpg'; // Image par défaut
+        const teamImage = gameState.teamImages[team.id] || 'https://source.unsplash.com/random/800x600/?portrait';
         
         const teamCard = document.createElement('div');
-        teamCard.className = 'team-card';
+        teamCard.className = `team-card team-${index+1}`;
         teamCard.innerHTML = `
           <div class="team-image">
-              <img src="${teamImage}" alt="${team.name}">
+            <img src="${teamImage}" alt="${team.name}">
           </div>
-          <div class="team-name" id="name-${team.id}">${team.name}</div>
-          <div class="score-display" id="score-${team.id}">${score}</div>
-          <div class="score-controls">
-            <button class="score-btn minus" onclick="changeScore('${team.id}', -1)">-</button>
-            <button class="score-btn" onclick="changeScore('${team.id}', 1)">+</button>
+          <div class="team-interface">
+            <h2 class="team-name" id="name-${team.id}">${team.name}</h2>
+            <div class="score-container">
+              <button class="score-btn minus" onclick="changeScore('${team.id}', -1)">-</button>
+              <div class="score-display" id="score-${team.id}">${score}</div>
+              <button class="score-btn plus" onclick="changeScore('${team.id}', 1)">+</button>
+            </div>
           </div>
         `;
         
         teamsContainer.appendChild(teamCard);
-      }
+      });
     }
 
     // Change score for a team
@@ -427,165 +130,89 @@
       document.getElementById(`score-${teamId}`).textContent = gameState.scores[teamId];
     }
 
-    // Update to next question
-    function nextQuestion() {
-      gameState.currentQuestion = (gameState.currentQuestion + 1) % gameState.questions.length;
-      updateQuestion();
-    }
-
-    // Update question display
-    function updateQuestion() {
-      questionElement.textContent = gameState.questions[gameState.currentQuestion];
-    }
-
     // Show settings modal
     function showSettings() {
-      // Update team inputs based on selected count
-      updateTeamInputs();
+      document.getElementById('team1').value = gameState.teams[0].name;
+      document.getElementById('team2').value = gameState.teams[1].name;
+      document.getElementById('pointValue').value = gameState.pointValue;
       settingsModal.style.display = 'flex';
-    }
-
-    // Update team inputs when count changes
-    function updateTeamInputs() {
-      const count = parseInt(teamCountSelect.value);
-      teamInputs.innerHTML = '';
-      
-      for (let i = 1; i <= count; i++) {
-        const teamName = gameState.teams[i-1]?.name || '';
-        const div = document.createElement('div');
-        div.className = 'input-group';
-        div.innerHTML = `
-          <label for="team${i}">Équipe ${i}:</label>
-          <input type="text" id="team${i}" placeholder="Nom de l'équipe ${i}" value="${teamName}">
-          <label for="team${i}Image">Photo de l'équipe:</label>
-          <input type="file" id="team${i}Image" accept="image/*">
-        `;
-        teamInputs.appendChild(div);
-      }
     }
 
     // Save settings
     function saveSettings() {
-      const count = parseInt(teamCountSelect.value);
-      gameState.teams = [];
-      gameState.scores = {};
-      gameState.teamImages = {};
+      gameState.teams[0].name = document.getElementById('team1').value || 'Équipe 1';
+      gameState.teams[1].name = document.getElementById('team2').value || 'Équipe 2';
+      gameState.pointValue = parseInt(document.getElementById('pointValue').value) || 1;
       
-      for (let i = 1; i <= count; i++) {
-        const teamName = document.getElementById(`team${i}`).value || `Équipe ${i}`;
-        const imageFile = document.getElementById(`team${i}Image`).files[0];
-        
-        gameState.teams.push({ id: `team${i}`, name: teamName });
-        gameState.scores[`team${i}`] = 0;
-        
-        if (imageFile) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                gameState.teamImages[`team${i}`] = e.target.result;
-                renderTeams(); // Mettre à jour l'affichage après le chargement de l'image
-            };
-            reader.readAsDataURL(imageFile);
-        }
+      // Handle team images
+      const imageFile1 = document.getElementById('team1Image').files[0];
+      const imageFile2 = document.getElementById('team2Image').files[0];
+      
+      if (imageFile1) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          gameState.teamImages['team1'] = e.target.result;
+          renderTeams();
+        };
+        reader.readAsDataURL(imageFile1);
       }
       
-      gameState.pointValue = parseInt(pointValueInput.value) || 1;
-      gameState.timerEnabled = enableTimerCheckbox.checked;
-      gameState.timerDuration = parseInt(timerDurationInput.value) || 5;
+      if (imageFile2) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          gameState.teamImages['team2'] = e.target.result;
+          renderTeams();
+        };
+        reader.readAsDataURL(imageFile2);
+      }
       
       renderTeams();
       settingsModal.style.display = 'none';
-      nextQuestionBtn.disabled = false;
-    }
-
-    // Start timer
-    function startTimer() {
-      if (gameState.timerInterval) {
-        clearInterval(gameState.timerInterval);
-      }
-      
-      gameState.timeRemaining = gameState.timerDuration * 60;
-      timerContainer.style.display = 'block';
-      updateTimerDisplay();
-      
-      gameState.timerInterval = setInterval(() => {
-        gameState.timeRemaining--;
-        updateTimerDisplay();
-        
-        if (gameState.timeRemaining <= 0) {
-          clearInterval(gameState.timerInterval);
-          alert("Le temps est écoulé !");
-        }
-      }, 1000);
-    }
-
-    // Stop timer
-    function stopTimer() {
-      if (gameState.timerInterval) {
-        clearInterval(gameState.timerInterval);
-        gameState.timerInterval = null;
-      }
-      timerContainer.style.display = 'none';
-    }
-
-    // Update timer display
-    function updateTimerDisplay() {
-      const minutes = Math.floor(gameState.timeRemaining / 60);
-      const seconds = gameState.timeRemaining % 60;
-      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     // Reset game
     function resetGame() {
       if (confirm("Voulez-vous vraiment réinitialiser les scores ?")) {
-        for (const teamId in gameState.scores) {
-          gameState.scores[teamId] = 0;
-        }
+        gameState.scores.team1 = 0;
+        gameState.scores.team2 = 0;
         renderTeams();
-        gameState.currentQuestion = 0;
-        updateQuestion();
-        
-        if (gameState.timerInterval) {
-          clearInterval(gameState.timerInterval);
-          gameState.timerInterval = null;
+      }
+    }
+
+    // Toggle fullscreen
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Erreur lors du passage en plein écran: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
         }
-        timerContainer.style.display = 'none';
       }
     }
 
     // Event listeners
-    teamCountSelect.addEventListener('change', updateTeamInputs);
+    menuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      menuOptions.style.display = menuOptions.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    document.addEventListener('click', function() {
+      menuOptions.style.display = 'none';
+    });
+    
+    menuOptions.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    
     settingsBtn.addEventListener('click', showSettings);
     saveSettingsBtn.addEventListener('click', saveSettings);
-    nextQuestionBtn.addEventListener('click', nextQuestion);
-    enableTimerCheckbox.addEventListener('change', function() {
-      timerSettings.style.display = this.checked ? 'block' : 'none';
-    });
-    timerBtn.addEventListener('click', startTimer);
-    stopTimerBtn.addEventListener('click', stopTimer);
     resetBtn.addEventListener('click', resetGame);
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
 
     // Initialize the game when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set default teams
-      gameState.teams = [
-        { id: 'team1', name: 'Équipe 1' },
-        { id: 'team2', name: 'Équipe 2' }
-      ];
-      gameState.scores = {
-        team1: 0,
-        team2: 0
-      };
-      
-      initGame();
-      showSettings(); // Show settings modal first
-    });
-
-    // Allow adding custom questions from console for debugging
-    window.addQuestion = function(question) {
-      gameState.questions.push(question);
-      localStorage.setItem('quizQuestions', JSON.stringify(gameState.questions));
-      console.log(`Question added: "${question}"`);
-    };
+    document.addEventListener('DOMContentLoaded', initGame);
   </script>
 </body>
 </html>
