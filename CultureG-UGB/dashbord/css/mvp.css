@@ -38,13 +38,13 @@ body, html {
     box-shadow: var(--box-shadow); border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .config-form h1 {
-    text-align: center; margin-bottom: 30px; color: var(--primary-color);
+    text-align: center; margin-bottom: 30px; color: var(--text-color-dark);
     font-weight: 700; font-size: 2rem;
 }
 .form-group { margin-bottom: 20px; }
 .form-group label {
     display: block; margin-bottom: 8px; font-weight: 600;
-    color: var(--primary-color);
+    color: var(--text-color-dark);;
 }
 .form-group input, .form-group textarea, .form-group select {
     width: 100%; padding: 12px; border: 1px solid #ddd;
@@ -63,7 +63,7 @@ body, html {
     border: 1px solid #ddd; object-fit: cover;
 }
 .submit-btn {
-    background-color: var(--primary-color); color: white; border: none;
+    background-color: blue; color: white; border: none;
     padding: 14px 30px; border-radius: var(--border-radius); cursor: pointer;
     font-weight: 600; font-size: 1.1rem; transition: all var(--transition-time);
     width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
