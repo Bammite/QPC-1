@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="x-icon" href="../assets/icone.JPG"> <title>Affichage du Champion</title>
+    <link rel="stylesheet" href="./css/mvp.css">
+</head>
+<body>
+
+    <div class="display-container" id="display-container">
+        <div class="background-image" id="champion-background-image"></div>
+        <div class="champion-info-overlay">
+
+            <div class="info-top-left">
+                <h2 class="champion-name-display" id="display-name-text"></h2>
+            </div>
+
+            <div class="info-top-right">
+                <h1 class="champion-title-display" id="display-title-text"></h1>
+                <div class="champion-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="60px" height="60px">
+                         <path d="M16 0H8C5.791 0 4 1.791 4 4v2H2v4h2v10c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V10h2V6h-2V4c0-2.209-1.791-4-4-4zm-2 6H10V4c0-1.103.897-2 2-2s2 .897 2 2v2zm4 14H6V10h12v10zm2-12h-2V6h2v2zm-14 0H4V6h2v2z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="info-bottom-left">
+                <div class="champion-description-container">
+                    <p class="champion-description-text" id="display-description-text"></p>
+                </div>
+            </div>
+
+            <div class="info-bottom-right">
+                <div class="champion-points-display" id="display-points-container" style="display: none;">
+                    <p>Points: <span id="display-points-text"></span></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-overlay" id="form-overlay">
+        <div class="config-form">
+            <h1>Inscrire le Champion</h1>
+            <form id="champion-form">
+                <div class="form-group">
+                    <label for="mvp-prenom-input">Prénom du Champion</label>
+                    <input type="text" id="mvp-prenom-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="mvp-nom-input">Nom du Champion</label>
+                    <input type="text" id="mvp-nom-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="mvp-photo-file">Photo du Champion</label>
+                    <input type="file" id="mvp-photo-file" accept="image/*" required>
+                    <img id="image-preview" class="image-preview" src="#" alt="Aperçu de l'image">
+                </div>
+                <div class="form-group">
+                    <label for="mvp-description-input">Description</label>
+                    <textarea id="mvp-description-input" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mvp-title-select">Titre</label>
+                    <select id="mvp-title-select" required>
+                        <option value="">-- Choisir un titre --</option>
+                        <option value="MVP de la competitions">MVP (Most Valuable Player)</option>
+                        <option value="Meilleur Plaideur de la competitions">Meilleur Plaideur</option>
+                    </select>
+                </div>
+                <div class="form-group" id="mvp-points-group" style="display: none;">
+                    <label for="mvp-points-input">Nombre de Points (si MVP)</label>
+                    <input type="number" id="mvp-points-input" min="0">
+                </div>
+                <button type="submit" class="submit-btn">Afficher le Champion</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formOverlay = document.getElementById('form-overlay');
+            const championForm = document.getElementById('champion-form');
+            const imageFileInput = document.getElementById('mvp-photo-file');
+            const imagePreview = document.getElementById('image-preview');
+            const titleSelect = document.getElementById('mvp-title-select');
+            const pointsGroup = document.getElementById('mvp-points-group');
+            const pointsInput = document.getElementById('mvp-points-input');
+
+            const displayContainer = document.getElementById('display-container');
+            const championBackgroundImage = document.getElementById('champion-background-image');
+            const displayTitleText = document.getElementById('display-title-text');
+            const displayNameText = document.getElementById('display-name-text');
+            const displayDescriptionText = document.getElementById('display-description-text');
+            const displayPointsContainer = document.getElementById('display-points-container');
+            const displayPointsText = document.getElementById('display-points-text');
+
+            imageFileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '#';
+                    imagePreview.style.display = 'none';
+                }
+            });
+
+            titleSelect.addEventListener('change', function() {
+                if (this.value === 'MVP de la competitions') {
+                    pointsGroup.style.display = 'block';
+                    pointsInput.required = true;
+                } else {
+                    pointsGroup.style.display = 'none';
+                    pointsInput.required = false;
+                    pointsInput.value = '';
+                }
+            });
+
+            championForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const prenom = document.getElementById('mvp-prenom-input').value;
+                const nom = document.getElementById('mvp-nom-input').value;
+                const description = document.getElementById('mvp-description-input').value;
+                const title = titleSelect.value;
+                const points = pointsInput.value;
+                const photoFile = imageFileInput.files[0];
+
+                displayNameText.textContent = `${prenom} ${nom}`;
+                displayTitleText.textContent = title;
+                displayDescriptionText.textContent = description;
+
+                if (title === 'MVP de la competitions' && points) {
+                    displayPointsText.textContent = points;
+                    displayPointsContainer.style.display = 'block';
+                } else {
+                    displayPointsContainer.style.display = 'none';
+                }
+                
+                if (photoFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        championBackgroundImage.style.backgroundImage = `url('${e.target.result}')`;
+                    }
+                    reader.readAsDataURL(photoFile);
+                }
+                
+                formOverlay.style.display = 'none';
+                displayContainer.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

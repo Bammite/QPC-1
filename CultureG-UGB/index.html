@@ -5,44 +5,984 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Club Génie en Herbe - Culture Générale</title>
     <link rel="shortcut icon" type="x-icon" href="../assets/icone.JPG">
-    <!-- icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css?v=1.1">
+    {/* CSS intégré ci-dessous */}
 
     <style>
-        .footer-section a{
-            text-decoration: none;
-            background-color: transparent;
-        }
-        .footer-section a i{
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        /* styles.css contenu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .logo{
-            font-size: 12px;
-            overflow: hidden;
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #777;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2px; /* Ajusté par rapport à l'original qui avait 0 20px, puis 0 2px */
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8px; /* Ajusté pour correspondre à l'original */
+            /* width: 100%; */ /* Enlevé, container gère déjà la largeur */
+        }
+
+        .logo { /* Style original du logo dans la navbar */
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            /* Styles ajoutés de votre section <style> pour le logo navbar */
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            color: black;
+            /* justify-content: space-between; */ /* Conflit potentiel, le flex de navbar container gère déjà */
         }
-        .logo img{
+        .logo img{ /* Style original du logo dans la navbar */
             width: 50px;
             height: 50px;
             object-fit: cover;
             border-radius: 50%;
             margin: 0 5px;
         }
+        /* Style pour le texte du logo navbar si besoin de le préciser */
+        .navbar .logo { 
+            font-size: 12px; /* Tel que défini dans votre <style> */
+            color: black; /* Tel que défini dans votre <style> */
+            overflow: hidden; /* Tel que défini dans votre <style> */
+        }
+
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Section Hero */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            color: white;
+            text-align: left; 
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Changé de -1 à 0 pour s'assurer qu'il est en arrière-plan */
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Légèrement plus sombre pour la lisibilité */
+        }
         
+        .hero-main-container { /* Nouveau conteneur pour le texte et le logo */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            width: 100%; 
+            max-width: 1600px; /* Pour correspondre au .container général */
+            padding: 0 20px; 
+            z-index: 1; /* Au-dessus du slideshow */
+            position: relative; 
+        }
+
+        .hero-text-content {
+            flex: 2; 
+            padding-right: 40px; 
+            opacity: 0; 
+            animation: fadeInContent 0.5s 0.2s forwards;
+        }
+
+        .hero-logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-logo-animated {
+            width:  300px; 
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            opacity: 0; 
+            transform: translateX(100%) rotate(-180deg); 
+            animation: slideInRotateFromRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+        }
+
+        .hero-text-content h1.animate-title {
+            font-size: 3rem; 
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0; 
+            transform: translateX(-100%); 
+            animation: slideInFromLeft 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+        }
+
+        .hero-text-content p.typewriter-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            opacity: 0; 
+            position: relative; 
+        }
+
+        .hero-text-content p.typewriter-text.typing::after {
+            content: '|';
+            position: absolute;
+            /* right: -10px; */ /* Enlevé pour que le curseur soit juste après le texte */
+            margin-left: 2px;
+            animation: blinkCursor 0.7s infinite;
+            color: var(--secondary-color); 
+        }
+
+        /* Section Vocation */
+        .vocation {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .vocation h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .vocation h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+
+        .vocation-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .vocation-text {
+            flex: 1;
+        }
+
+        .vocation-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .vocation-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .vocation-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .vocation-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Section Activités */
+        .activites {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .activites h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .activites h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+        
+        /* Styles pour la sous-section Activités Courantes */
+        .activites-courantes {
+            margin-bottom: 60px; /* Espace avant la section historique */
+        }
+        .activites-courantes h3 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        .activites-courantes h3::after { /* Style similaire à celui de l'historique mais avec couleur secondaire */
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background-color: var(--secondary-color); 
+        }
+
+
+        .activites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .activite-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            /* cursor: pointer; */ /* Enlevé car pas d'action de clic définie ici */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activite-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .activite-card::after { /* Barre de couleur en haut de la carte */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--secondary-color);
+        }
+
+        .activite-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .activite-card h4 { /* Changé de h3 à h4 pour la sémantique, car on a déjà un h3 pour "Ce que nous proposons" */
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .activite-card p {
+            color: var(--text-light);
+            margin-bottom: 0; /* Ajusté car pas de lien "en savoir plus" ici */
+        }
+
+        /* Styles pour la sous-section Historique */
+        .historique {
+            padding: 80px 0; 
+            background-color: #f9f9f9; 
+        }
+
+        .historique h3 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem; 
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .historique h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px; 
+            height: 3px; 
+            background-color: var(--accent-color); 
+        }
+
+        .historique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px;
+        }
+
+        .evenement-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden; 
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .evenement-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .evenement-image {
+            width: 100%;
+            height: 200px; 
+            overflow: hidden;
+        }
+
+        .evenement-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transition: transform 0.4s ease;
+        }
+
+        .evenement-card:hover .evenement-image img {
+            transform: scale(1.05); 
+        }
+
+        .evenement-content {
+            padding: 25px;
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .evenement-content h4 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .evenement-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            flex-grow: 1; 
+        }
+
+        .evenement-content .en-savoir-plus {
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-decoration: none; 
+            transition: color 0.3s ease, transform 0.3s ease;
+            align-self: flex-start; 
+        }
+
+        .evenement-card:hover .en-savoir-plus {
+            color: var(--accent-color); 
+            transform: translateX(3px);
+        }
+        
+
+        /* Section Partenaires */
+        .partenaires {
+            padding: 60px 0;
+            background-color: white; /* Était var(--light-color) - changé pour correspondre au code CSS fourni */
+        }
+
+        .partenaires h2 {
+            text-align: center;
+            margin-bottom: 40px; /* Était 50px */
+            color: var(--primary-color);
+            /* Ajouter le soulignement comme les autres titres de section */
+            position: relative;
+            font-size: 2.5rem; 
+        }
+        .partenaires h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+
+
+        .partenaires-slider {
+            overflow: hidden;
+            padding: 20px 0;
+             /* mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); /* Effet de fondu sur les côtés */
+        }
+
+        .slider-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            align-items: center;
+        }
+
+
+        .partenaires .container{ /* S'assure que le conteneur de la section partenaire peut être plus large si besoin pour le défilement */
+            max-width: 100%; /* Permet au slider d'utiliser toute la largeur disponible */
+            /* padding: 0; */ /* Optionnel: enlever le padding si le slider doit toucher les bords */
+        }
+        .partenaire-logo {
+            min-width: 180px; /* Ajusté */
+            padding: 0 30px; /* Ajusté */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .partenaire-logo img {
+            width: 100%; /* Pour remplir min-width */
+            max-width: 150px; /* Taille max du logo */
+            height: auto;
+            object-fit: contain;
+            filter: grayscale(100%); /* Optionnel: logos en niveaux de gris */
+            opacity: 0.7;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        .partenaire-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+
+        /* Section Mot du Président */
+        .mot-president {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .mot-president h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            /* Ajouter le soulignement comme les autres titres de section */
+            position: relative;
+            font-size: 2.5rem;
+        }
+        .mot-president h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+
+        .president-content {
+            display: grid;
+            grid-template-columns: 1fr; /* Par défaut une colonne */
+            gap: 30px;
+            align-items: center;
+        }
+        @media (min-width: 768px) { /* Deux colonnes sur les écrans plus larges */
+            .president-content {
+                grid-template-columns: 300px 1fr; /* Colonne fixe pour l'image, le reste pour le texte */
+            }
+        }
+
+
+        .president-image {
+            /* flex: 0 0 300px; */ /* Plus nécessaire avec grid */
+            text-align: center; /* Pour centrer l'image si elle est plus petite */
+        }
+
+        .president-image img {
+            width: 100%;
+            max-width: 300px; /* Limite la taille de l'image */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .president-text {
+            /* flex: 1; */ /* Plus nécessaire avec grid */
+        }
+
+        .president-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .president-text p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .president-signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-section p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .footer-section a{ /* Style de votre <style> initial */
+            text-decoration: none;
+            background-color: transparent;
+            color: white; /* Assurer la visibilité des liens */
+        }
+
+        .footer-section i { /* Style de votre <style> initial pour les icônes de contact */
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a i { /* Style de votre <style> initial pour les icônes sociales */
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 1rem; /* Ajuster la taille si besoin */
+        }
+        /* Le style .social-icons a d'origine est plus spécifique, on garde celui-ci pour l'effet hover */
+         .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* La taille sera définie par le padding de l'icône */
+            height: 40px;
+            /* background-color: rgba(255, 255, 255, 0.1); */ /* Déjà dans .social-icons a i */
+            /* border-radius: 50%; */ /* Déjà dans .social-icons a i */
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover i { /* Appliquer l'effet hover sur l'icône */
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        .social-icons a:hover { /* Si on veut un effet sur le <a> lui-même */
+             transform: translateY(-3px); /* Déplacer tout le lien, pas juste l'icône */
+        }
+
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations Keyframes */
+        @keyframes fadeInUp { /* Animation originale, peut-être réutilisée ailleurs */
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInContent {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRotateFromRight {
+            0% {
+                transform: translateX(100%) rotate(60deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Ajuster en fonction du nombre d'éléments et de leur largeur pour un défilement continu */
+                /* Si vous avez 7 logos et que chacun prend X pixels avec le padding,
+                   et que vous dupliquez la liste pour le défilement infini,
+                   vous devez translater de - (nombre d'éléments originaux * largeur totale d'un élément) */
+                transform: translateX(-50%); /* Cela suppose que vous avez dupliqué la liste des logos dans le HTML */
+            }
+        }
+
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .vocation-content {
+                flex-direction: column;
+            }
+            
+            .vocation-image {
+                order: -1;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0; /* Commence du haut de la page */
+                left: -100%;
+                width: 80%; /* Pas toute la largeur pour voir un peu derrière */
+                max-width: 300px; /* Largeur max */
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                padding-top: 70px; /* Espace pour la navbar fixe si elle est toujours visible */
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0; /* Plus d'espace vertical */
+            }
+            .nav-links a {
+                font-size: 1.1rem; /* Texte un peu plus grand */
+            }
+            
+            .hamburger {
+                display: block;
+                z-index: 1001; /* Au dessus du menu mobile */
+            }
+            
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            /* Responsive pour la section Hero */
+            .hero-main-container {
+                flex-direction: column; 
+                text-align: center; 
+            }
+
+            .hero-text-content {
+                padding-right: 0;
+                padding-bottom: 30px; 
+                order: 2; 
+                text-align: center; 
+            }
+            .hero-text-content h1.animate-title {
+                font-size: 2.2rem; 
+            }
+            .hero-text-content p.typewriter-text {
+                font-size: 1rem;
+            }
+
+            .hero-logo-container {
+                order: 1; 
+                margin-bottom: 20px;
+            }
+
+            .hero-logo-animated {
+                width: 150px;
+                height: 150px;
+                animation: slideInRotateFromRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+            }
+
+            .hero-text-content h1.animate-title,
+            .hero-logo-animated {
+                /* transform: translateX(0) rotate(0); */ /* Pas nécessaire si les animations gèrent bien l'état initial */
+            }
+            .hero-text-content h1.animate-title {
+                animation: slideInFromLeft 1s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
+            }
+
+            /* Ajustements responsives pour la section historique */
+            .historique-grid {
+                grid-template-columns: 1fr; 
+            }
+
+            .historique h3 {
+                font-size: 2rem;
+            }
+
+            .evenement-image {
+                height: 180px; 
+            }
+             /* Ajustements responsives pour Activités Courantes */
+            .activites-courantes h3 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-text-content h1.animate-title { /* Était .hero h1 */
+                font-size: 1.8rem; /* Encore plus petit */
+            }
+             .hero-text-content p.typewriter-text {
+                font-size: 0.9rem;
+            }
+            
+            .btn-large {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .vocation h2, .activites h2, .partenaires h2, .mot-president h2 {
+                font-size: 2rem;
+            }
+            .vocation h2::after, .activites h2::after, .partenaires h2::after, .mot-president h2::after {
+                width: 60px;
+                height: 3px;
+                bottom: -10px;
+            }
+
+             /* Ajustements responsives pour Activités Courantes et Historique */
+            .activites-courantes h3, .historique h3 {
+                font-size: 1.8rem;
+            }
+             .activites-courantes h3::after, .historique h3::after {
+                 width: 50px;
+                 height: 2px;
+                 bottom: -8px;
+             }
+
+            .evenement-content h4 {
+                font-size: 1.15rem;
+            }
+            .evenement-content p {
+                font-size: 0.9rem;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo"><img src="./assets/icone.JPG" alt="">Club de culture generale de <br> l'UGB</a>
+            <a href="#" class="logo"><img src="./assets/icone-logo/94D89EBD-4312-4B10-82DC-79C559396FCE.png" alt="Logo UGB">Club de culture generale de <br> l'UGB</a>
             <ul class="nav-links">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#vocation">Notre Vocation</a></li>
@@ -56,7 +996,6 @@
         </div>
     </nav>
 
-    <!-- Section Accueil -->
     <section id="accueil" class="hero">
         <div class="slideshow">
             <div class="slide active" style="background-image: url('./assets/quesitionpourChampion.jpg')"></div>
@@ -71,16 +1010,20 @@
             <div class="slide" style="background-image: url('./assets/OUZ_5071.jpg')"></div>
             <div class="slide" style="background-image: url('./assets/OUZ_5224.jpg')"></div>
             <div class="slide" style="background-image: url('./assets/DSC_2282.jpg')"></div>
-
         </div>
-        <div class="hero-content">
-            <h1>Bienvenue au Club de culture generale de l'UGB</h1>
-            <p>Développez votre culture générale et testez vos connaissances dans une ambiance conviviale</p>
-            <a href="./dashbord/manage.html" class="btn btn-large">Accéder au tableau de bord</a>
+
+        <div class="hero-main-container"> 
+            <div class="hero-text-content">
+                <h1 class="animate-title">Bienvenue au Club de culture generale de l'UGB</h1>
+                <p class="typewriter-text">Développez votre culture générale et testez vos connaissances dans une ambiance conviviale</p>
+                <a href="./dashbord/manage.html" class="btn btn-large">Accéder au tableau de bord</a>
+            </div>
+            <div class="hero-logo-container">
+                <img src="./assets/icone-logo/iconccg.svg" alt="Logo Club UGB" class="hero-logo-animated">
+            </div>
         </div>
     </section>
 
-    <!-- Section Notre Vocation -->
     <section id="vocation" class="vocation">
         <div class="container">
             <h2>Notre Vocation</h2>
@@ -97,12 +1040,10 @@
         </div>
     </section>
 
-    <!-- Section Activités -->
     <section id="activites" class="activites">
         <div class="container">
             <h2>Nos Activités</h2>
             
-            <!-- Sous-section Activités Courantes -->
             <div class="activites-courantes">
                 <h3>Ce que nous proposons</h3>
                 <div class="activites-grid">
@@ -137,23 +1078,22 @@
                 </div>
             </div>
             
-            <!-- Sous-section Historique -->
             <div class="historique">
                 <h3>Notre Historique d'Événements</h3>
                 <div class="historique-grid">
-                    <div class="evenement-card" onclick="window.location.href='evenement1.html'">
+                    <div class="evenement-card" >
                         <div class="evenement-image">
                             <img src="./assets/quesitionpourChampion.jpg" alt="Question pour un champion ugb">
                         </div>
                         <div class="evenement-content">
                             <h4>Question pour un champion UGB</h4>
                             <p>Revivez les moments forts de notre grande finale de Question pour un champion avec 32 équipes en compétition.</p>
-                            <span class="en-savoir-plus">En savoir plus →</span>
+                            <span class="en-savoir-plus" onclick="window.location.href='./evenements/evenement.html?id=qpc'">En savoir plus →</span>
                         </div>
                     </div>
-                    <div class="evenement-card" onclick="window.location.href='evenement1.html'">
+                    <div class="evenement-card">
                         <div class="evenement-image">
-                            <img src="./assets/course.jpeg" alt="Finale 2022">
+                            <img src="./assets/course.jpeg" alt="LANGAA BURI">
                         </div>
                         <div class="evenement-content">
                             <h4>LANGAA BURI</h4>
@@ -163,12 +1103,11 @@
                     </div>
                     <div class="evenement-card" onclick="window.location.href='evenement2.html'">
                         <div class="evenement-image">
-                            <img src="./assets/activism.JPG" alt="Tournoi Jeunes">
+                            <img src="./assets/activism.JPG" alt="16 jours d'activisme">
                         </div>
                         <div class="evenement-content">
                             <h4>16 jours d'activisme</h4>
-                            <p>LES VIOLENCES BASÉES SUR LE GENRE EN MILIEU UNIVERSITAIRE SONT UN
-VERITABLE FREIN À L'EPANOUISSEMENT.</p>
+                            <p>LES VIOLENCES BASÉES SUR LE GENRE EN MILIEU UNIVERSITAIRE SONT UN VERITABLE FREIN À L'EPANOUISSEMENT.</p>
                             <span class="en-savoir-plus">En savoir plus →</span>
                         </div>
                     </div>
@@ -187,53 +1126,38 @@ VERITABLE FREIN À L'EPANOUISSEMENT.</p>
         </div>
     </section>
 
-    <!-- Section Partenaires -->
     <section class="partenaires">
         <div class="container">
             <h2>Nos Partenaires</h2>
             <div class="partenaires-slider">
                 <div class="slider-container">
-                    <!-- Dupliquer les logos pour créer un effet de défilement infini -->
                     <div class="slider-track">
-                        <!-- Ajoutez vos logos de partenaires ici -->
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        <div class="partenaire-logo">
-                            <img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo partenaire">
-                        </div>
-                        
-                        
-                        </div>
-                        <!-- Répétez pour chaque partenaire -->
+                        <div class="partenaire-logo"><img src="./assets/partenaire/logo-fondation-ugb_02.png" alt="Logo Fondation UGB"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/comsoc.jpg" alt="Logo CROUS Ziguinchor"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/sonatel.jpeg" alt="Logo Senegal Numerique"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.11.04.jpeg" alt="Logo Fondation UGB"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.15.11 (1).jpeg" alt="Logo CROUS Ziguinchor"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.15.11.jpeg" alt="Logo Senegal Numerique"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.15.12.jpeg" alt="Logo Fondation UGB"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.18.07.jpeg" alt="Logo Fondation UGB"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.02 (1).jpeg" alt="Logo CROUS Ziguinchor"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.02 (2).jpeg" alt="Logo Senegal Numerique"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.02.jpeg" alt="Logo Fondation UGB"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.03 (1).jpeg" alt="Logo CROUS Ziguinchor"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.03 (2).jpeg" alt="Logo Senegal Numerique"></div>
+                        <div class="partenaire-logo"><img src="./assets/partenaire/WhatsApp Image 2025-05-19 at 16.19.03.jpeg" alt="Logo Fondation UGB"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Mot du Président -->
     <section class="mot-president">
         <div class="container">
             <h2>Mot du Président</h2>
             <div class="president-content">
                 <div class="president-image">
-                    <img src="./assets/DSC_2039.jpg" alt="Photo du président">
+                    <img src="./assets/DSC_2039.jpg" alt="Photo du président Sydia">
                 </div>
                 <div class="president-text">
                     <h3>Message de notre Président</h3>
@@ -250,7 +1174,6 @@ VERITABLE FREIN À L'EPANOUISSEMENT.</p>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -260,25 +1183,117 @@ VERITABLE FREIN À L'EPANOUISSEMENT.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
-                    <p><i class="fas fa-envelope"></i> contact@clubgenieenherbe.sn</p>
-                    <p><i class="fas fa-phone"></i> +221 77 182 23 58</p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:contact@clubgenieenherbe.sn">contact@clubgenieenherbe.sn</a></p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+221771822358">+221 77 182 23 58</a></p>
                 </div>
                 <div class="footer-section">
                     <h3>Réseaux sociaux</h3>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/profile.php?id=61570021480884&mibextid=wwXIfr&mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
-                        <a href="https://x.com/ccgugb1?s=21"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/club_de_culture_generale_ugb?igsh=cHUxZjVpMGc1Zzc3"><i class="fab fa-instagram"></i></a>
-                        <a href="chat.whatsapp.com/HxL8UDGZM5z5M4K8XBA87E"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61570021480884" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/ccgugb1" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/club_de_culture_generale_ugb" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://chat.whatsapp.com/HxL8UDGZM5z5M4K8XBA87E" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Club Génie en Herbe. Tous droits réservés.</p>
+                <p>&copy; <span id="currentYear"></span> Club Génie en Herbe. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js?v=1.0"></script>
+    {/* JavaScript intégré ci-dessous */}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+        
+            // Hamburger menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+        
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+        
+                // Close menu when a link is clicked (for mobile view)
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navLinks.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        
+            // Slideshow
+            const slides = document.querySelectorAll('.slideshow .slide');
+            let currentSlide = 0;
+            const slideInterval = 5000; // 5 seconds
+        
+            if (slides.length > 0) {
+                slides[currentSlide].classList.add('active'); // Activate the first slide
+        
+                function nextSlide() {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }
+                setInterval(nextSlide, slideInterval);
+            }
+        
+            // Typewriter effect for hero paragraph
+            const typewriterElement = document.querySelector('.typewriter-text');
+            if (typewriterElement) {
+                const originalText = typewriterElement.textContent.trim(); // Trim pour enlever les espaces
+                // Délai pour commencer après l'animation du H1 (1.2s) et du logo (1.5s + 0.8s delay)
+                // Commençons un peu après le H1, disons 1.2s + 0.3s (delay h1) = 1.5s
+                // Ou 0.3s (delay h1) + 1.2s (duration h1) = 1.5s, puis un petit délai supplémentaire
+                const typingStartDelay = 1700; // Millisecondes (1.2s pour le titre + 0.5s de pause)
+                const charSpeed = 50; // Vitesse de frappe en ms
+        
+                typewriterElement.textContent = ''; // Vider le texte initialement
+        
+                setTimeout(() => {
+                    typewriterElement.style.opacity = '1'; 
+                    typewriterElement.classList.add('typing'); 
+                    let i = 0;
+                    function typeCharacter() {
+                        if (i < originalText.length) {
+                            typewriterElement.textContent += originalText.charAt(i);
+                            i++;
+                            setTimeout(typeCharacter, charSpeed);
+                        } else {
+                            // Optionnel: enlever le curseur après un certain temps
+                            setTimeout(() => {
+                                typewriterElement.classList.remove('typing');
+                            }, 2000); // Enlève le curseur 2 secondes après la fin de la frappe
+                        }
+                    }
+                    typeCharacter();
+                }, typingStartDelay);
+            }
+
+            // Update current year in footer
+            const yearSpan = document.getElementById('currentYear');
+            if(yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="x-icon" href="../assets/icone.JPG">
+    <title>Détails de l'événement</title>
+    <link rel="stylesheet" href="./css/evenement.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+        </div>
+    </nav>
+
+    <main class="event-container">
+        <div class="event-header">
+            <h1 id="event-title">Titre de l'événement</h1>
+            <div class="event-metadata">
+                <span id="event-date"><i class="far fa-calendar"></i> Date</span>
+                <span id="event-location"><i class="fas fa-map-marker-alt"></i> Lieu</span>
+            </div>
+        </div>
+
+        <div class="event-content">
+            <div class="media-section">
+                <div class="main-media" id="main-media">
+                    <!-- Image ou vidéo principale sera injectée ici -->
+                </div>
+                <div class="media-gallery" id="media-gallery">
+                    <!-- Galerie d'images sera injectée ici -->
+                </div>
+            </div>
+
+            <div class="description-section">
+                <div class="event-description" id="event-description">
+                    <!-- Description sera injectée ici -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="./js/evenement.js"></script>
+</body>
+</html>

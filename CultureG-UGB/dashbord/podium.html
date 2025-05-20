@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Résultats Compétition</title>
+  <style>
+    :root {
+      --primary-color: #4a6bff;
+      --secondary-color: #ff6b6b;
+      --gold-color: #ffd700;
+      --silver-color: #c0c0c0;
+      --bronze-color: #cd7f32;
+      --background-color: #f8f9fa;
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --border-radius: 10px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      min-height: 100vh;
+    }
+    
+    /* Mode sélection */
+    .mode-selection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    
+    .mode-title {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+    
+    .mode-options {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .mode-option {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      width: 300px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .mode-option:hover {
+      transform: translateY(-10px);
+    }
+    
+    .mode-option h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+    
+    .mode-option p {
+      color: #666;
+    }
+    
+    /* Formulaire d'ajout */
+    .setup-form {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .player-list {
+      margin-top: 30px;
+    }
+    
+    .player-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      margin-bottom: 15px;
+    }
+    
+    .player-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+    
+    .player-info {
+      flex-grow: 1;
+    }
+    
+    .player-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #3a5bef;
+    }
+    
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+    
+    /* Affichage MVP */
+    .mvp-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    
+    .mvp-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+    }
+    
+    .mvp-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #3a5bef 100%);
+      color: white;
+      padding: 30px;
+    }
+    
+    .mvp-title {
+      font-size: 2rem;
+      margin: 0;
+    }
+    
+    .mvp-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin: 10px 0 0;
+    }
+    
+    .mvp-body {
+      padding: 40px;
+    }
+    
+    .mvp-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      margin: -100px auto 20px;
+      position: relative;
+      background-color: white;
+    }
+    
+    .mvp-name {
+      font-size: 2.5rem;
+      margin: 20px 0 10px;
+      color: var(--primary-color);
+    }
+    
+    .mvp-score {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--gold-color);
+      margin: 10px 0;
+    }
+    
+    .mvp-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    
+    .mvp-problem {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      font-style: italic;
+      position: relative;
+    }
+    
+    .mvp-problem::before {
+      content: '"';
+      font-size: 4rem;
+      position: absolute;
+      top: -20px;
+      left: 10px;
+      color: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Affichage classement */
+    .ranking-container {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .ranking-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .ranking-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .podium {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 300px;
+      margin-bottom: 80px;
+      gap: 20px;
+    }
+    
+    .podium-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    .podium-first {
+      height: 250px;
+      width: 180px;
+      background: linear-gradient(to top, var(--gold-color), #ffea8d);
+      border-radius: 10px 10px 0 0;
+      order: 2;
+    }
+    
+    .podium-second {
+      height: 200px;
+      width: 150px;
+      background: linear-gradient(to top, var(--silver-color), #e6e6e6);
+      border-radius: 10px 10px 0 0;
+      order: 3;
+    }
+    
+    .podium-third {
+      height: 150px;
+      width: 150px;
+      background: linear-gradient(to top, var(--bronze-color), #e6c7a7);
+      border-radius: 10px 10px 0 0;
+      order: 1;
+    }
+    
+    .podium-player {
+      position: absolute;
+      top: -80px;
+      text-align: center;
+    }
+    
+    .podium-player img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .podium-player.first img {
+      border-color: var(--gold-color);
+    }
+    
+    .podium-player.second img {
+      border-color: var(--silver-color);
+    }
+    
+    .podium-player.third img {
+      border-color: var(--bronze-color);
+    }
+    
+    .podium-rank {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .podium-name {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    
+    .podium-score {
+      color: #666;
+    }
+    
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    
+    .player-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .player-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .player-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    
+    .player-card h3 {
+      margin: 10px 0 5px;
+      color: var(--primary-color);
+    }
+    
+    .player-card p {
+      margin: 5px 0;
+      color: #666;
+    }
+    
+    .player-score {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-top: 10px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .podium {
+        height: 200px;
+      }
+      
+      .podium-first {
+        height: 180px;
+        width: 120px;
+      }
+      
+      .podium-second {
+        height: 150px;
+        width: 100px;
+      }
+      
+      .podium-third {
+        height: 120px;
+        width: 100px;
+      }
+      
+      .podium-player img {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .mvp-name {
+        font-size: 2rem;
+      }
+      
+      .mvp-score {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Écran de sélection du mode -->
+  <div class="mode-selection" id="modeSelection">
+    <h1 class="mode-title">Affichage des Résultats</h1>
+    <div class="mode-options">
+      <div class="mode-option" id="mvpMode">
+        <h2>MVP Unique</h2>
+        <p>Afficher uniquement le meilleur joueur avec tous les détails</p>
+      </div>
+      <div class="mode-option" id="rankingMode">
+        <h2>Classement Complet</h2>
+        <p>Afficher tous les participants avec podium</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulaire de configuration -->
+  <div class="setup-form" id="setupForm" style="display: none;">
+    <h2 id="formTitle">Configuration des Joueurs</h2>
+    <div id="playerFormContainer"></div>
+    <button class="btn btn-primary" id="addPlayerBtn">Ajouter un Joueur</button>
+    <div class="player-list" id="playerList"></div>
+    <button class="btn btn-primary" id="validateBtn">Valider et Afficher</button>
+  </div>
+
+  <!-- Affichage MVP -->
+  <div class="mvp-container" id="mvpContainer">
+    <div class="mvp-card">
+      <div class="mvp-header">
+        <h2 class="mvp-title">MVP DE LA COMPÉTITION</h2>
+        <p class="mvp-subtitle">Meilleur Joueur</p>
+      </div>
+      <div class="mvp-body">
+        <img id="mvpImage" class="mvp-image" src="https://via.placeholder.com/200" alt="MVP">
+        <h1 id="mvpName" class="mvp-name">Nom du MVP</h1>
+        <div id="mvpScore" class="mvp-score">0 points</div>
+        <p id="mvpDescription" class="mvp-description">Description du joueur et de ses performances exceptionnelles durant la compétition.</p>
+        <div id="mvpProblem" class="mvp-problem">Problématique résolue par le joueur</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Affichage Classement -->
+  <div class="ranking-container" id="rankingContainer">
+    <div class="ranking-header">
+      <h1 class="ranking-title">CLASSEMENT FINAL</h1>
+      <p>Résultats de la compétition</p>
+    </div>
+    
+    <div class="podium">
+      <div class="podium-step podium-first">
+        <div class="podium-player first" id="firstPlace">
+          <img src="https://via.placeholder.com/100" alt="1er">
+          <div class="podium-rank">1er</div>
+          <div class="podium-name" id="firstName">Nom</div>
+          <div class="podium-score" id="firstScore">0 pts</div>
+        </div>
+      </div>
+      <div class="podium-step podium-second">
+        <div class="podium-player second" id="secondPlace">
+          <img src="https://via.placeholder.com/100" alt="2ème">
+          <div class="podium-rank">2ème</div>
+          <div class="podium-name" id="secondName">Nom</div>
+          <div class="podium-score" id="secondScore">0 pts</div>
+        </div>
+      </div>
+      <div class="podium-step podium-third">
+        <div class="podium-player third" id="thirdPlace">
+          <img src="https://via.placeholder.com/100" alt="3ème">
+          <div class="podium-rank">3ème</div>
+          <div class="podium-name" id="thirdName">Nom</div>
+          <div class="podium-score" id="thirdScore">0 pts</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="players-grid" id="playersGrid"></div>
+  </div>
+
+  <script>
+    // État de l'application
+    const appState = {
+      mode: null,
+      players: [],
+      currentPlayer: null,
+      mvp: null
+    };
+
+    // Éléments DOM
+    const modeSelection = document.getElementById('modeSelection');
+    const mvpMode = document.getElementById('mvpMode');
+    const rankingMode = document.getElementById('rankingMode');
+    const setupForm = document.getElementById('setupForm');
+    const formTitle = document.getElementById('formTitle');
+    const playerFormContainer = document.getElementById('playerFormContainer');
+    const playerList = document.getElementById('playerList');
+    const addPlayerBtn = document.getElementById('addPlayerBtn');
+    const validateBtn = document.getElementById('validateBtn');
+    const mvpContainer = document.getElementById('mvpContainer');
+    const rankingContainer = document.getElementById('rankingContainer');
+    
+    // MVP Elements
+    const mvpImage = document.getElementById('mvpImage');
+    const mvpName = document.getElementById('mvpName');
+    const mvpScore = document.getElementById('mvpScore');
+    const mvpDescription = document.getElementById('mvpDescription');
+    const mvpProblem = document.getElementById('mvpProblem');
+    
+    // Podium Elements
+    const firstPlace = document.getElementById('firstPlace');
+    const secondPlace = document.getElementById('secondPlace');
+    const thirdPlace = document.getElementById('thirdPlace');
+    const firstName = document.getElementById('firstName');
+    const secondName = document.getElementById('secondName');
+    const thirdName = document.getElementById('thirdName');
+    const firstScore = document.getElementById('firstScore');
+    const secondScore = document.getElementById('secondScore');
+    const thirdScore = document.getElementById('thirdScore');
+    const playersGrid = document.getElementById('playersGrid');
+
+    // Écouteurs d'événements
+    mvpMode.addEventListener('click', () => selectMode('mvp'));
+    rankingMode.addEventListener('click', () => selectMode('ranking'));
+    addPlayerBtn.addEventListener('click', addPlayerForm);
+    validateBtn.addEventListener('click', validatePlayers);
+
+    // Fonctions
+    function selectMode(mode) {
+      appState.mode = mode;
+      modeSelection.style.display = 'none';
+      setupForm.style.display = 'block';
+      
+      if (mode === 'mvp') {
+        formTitle.textContent = 'Configuration du MVP';
+      } else {
+        formTitle.textContent = 'Configuration des Joueurs';
+      }
+      
+      // Afficher le premier formulaire
+      addPlayerForm();
+    }
+
+    function addPlayerForm() {
+      const playerId = Date.now();
+      appState.currentPlayer = {
+        id: playerId,
+        name: '',
+        firstName: '',
+        team: '',
+        score: 0,
+        description: '',
+        problem: '',
+        image: null
+      };
+      
+      playerFormContainer.innerHTML = `
+        <div class="form-group">
+          <label for="playerName-${playerId}">Nom:</label>
+          <input type="text" id="playerName-${playerId}" placeholder="Nom du joueur" required>
+        </div>
+        ${appState.mode === 'ranking' ? `
+        <div class="form-group">
+          <label for="playerFirstName-${playerId}">Prénom:</label>
+          <input type="text" id="playerFirstName-${playerId}" placeholder="Prénom du joueur">
+        </div>
+        <div class="form-group">
+          <label for="playerTeam-${playerId}">Équipe:</label>
+          <input type="text" id="playerTeam-${playerId}" placeholder="Équipe du joueur">
+        </div>
+        ` : ''}
+        <div class="form-group">
+          <label for="playerScore-${playerId}">Score:</label>
+          <input type="number" id="playerScore-${playerId}" placeholder="Score" min="0" required>
+        </div>
+        ${appState.mode === 'mvp' ? `
+        <div class="form-group">
+          <label for="playerDescription-${playerId}">Description:</label>
+          <textarea id="playerDescription-${playerId}" placeholder="Description du joueur"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="playerProblem-${playerId}">Problématique résolue:</label>
+          <textarea id="playerProblem-${playerId}" placeholder="Problème résolu par le joueur"></textarea>
+        </div>
+        ` : ''}
+        <div class="form-group">
+          <label for="playerImage-${playerId}">Photo:</label>
+          <input type="file" id="playerImage-${playerId}" accept="image/*">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="savePlayer-${playerId}">Enregistrer</button>
+        </div>
+      `;
+      
+      document.getElementById(`savePlayer-${playerId}`).addEventListener('click', () => savePlayer(playerId));
+    }
+
+    function savePlayer(playerId) {
+      const name = document.getElementById(`playerName-${playerId}`).value;
+      const firstName = appState.mode === 'ranking' ? document.getElementById(`playerFirstName-${playerId}`).value : '';
+      const team = appState.mode === 'ranking' ? document.getElementById(`playerTeam-${playerId}`).value : '';
+      const score = parseInt(document.getElementById(`playerScore-${playerId}`).value) || 0;
+      const description = appState.mode === 'mvp' ? document.getElementById(`playerDescription-${playerId}`).value : '';
+      const problem = appState.mode === 'mvp' ? document.getElementById(`playerProblem-${playerId}`).value : '';
+      const imageInput = document.getElementById(`playerImage-${playerId}`);
+      
+      if (!name || isNaN(score)) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+      }
+      
+      const player = {
+        id: playerId,
+        name,
+        firstName,
+        team,
+        score,
+        description,
+        problem,
+        image: null
+      };
+      
+      if (imageInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          player.image = e.target.result;
+          addPlayerToList(player);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        addPlayerToList(player);
+      }
+    }
+
+    function addPlayerToList(player) {
+      // Vérifier si le joueur existe déjà
+      const existingIndex = appState.players.findIndex(p => p.id === player.id);
+      if (existingIndex >= 0) {
+        appState.players[existingIndex] = player;
+      } else {
+        appState.players.push(player);
+      }
+      
+      renderPlayerList();
+      addPlayerForm(); // Préparer le formulaire pour le prochain joueur
+    }
+
+    function renderPlayerList() {
+      playerList.innerHTML = '';
+      
+      appState.players.sort((a, b) => b.score - a.score);
+      
+      appState.players.forEach(player => {
+        const playerItem = document.createElement('div');
+        playerItem.className = 'player-item';
+        playerItem.innerHTML = `
+          ${player.image ? `<img src="${player.image}" alt="${player.name}">` : '<div style="width:60px;height:60px;background:#ddd;border-radius:50%;"></div>'}
+          <div class="player-info">
+            <h3>${player.name} ${player.firstName}</h3>
+            <p>${player.team ? `Équipe: ${player.team}` : ''}</p>
+            <p>Score: ${player.score} points</p>
+          </div>
+          <div class="player-actions">
+            <button class="btn btn-secondary edit-btn" data-id="${player.id}">Modifier</button>
+            <button class="btn btn-danger delete-btn" data-id="${player.id}">Supprimer</button>
+          </div>
+        `;
+        
+        playerList.appendChild(playerItem);
+      });
+      
+      // Ajouter les écouteurs pour les boutons
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => editPlayer(e.target.dataset.id));
+      });
+      
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => deletePlayer(e.target.dataset.id));
+      });
+    }
+
+    function editPlayer(playerId) {
+      const player = appState.players.find(p => p.id == playerId);
+      if (!player) return;
+      
+      appState.currentPlayer = player;
+      
+      playerFormContainer.innerHTML = `
+        <div class="form-group">
+          <label for="playerName-${playerId}">Nom:</label>
+          <input type="text" id="playerName-${playerId}" value="${player.name}" required>
+        </div>
+        ${appState.mode === 'ranking' ? `
+        <div class="form-group">
+          <label for="playerFirstName-${playerId}">Prénom:</label>
+          <input type="text" id="playerFirstName-${playerId}" value="${player.firstName || ''}">
+        </div>
+        <div class="form-group">
+          <label for="playerTeam-${playerId}">Équipe:</label>
+          <input type="text" id="playerTeam-${playerId}" value="${player.team || ''}">
+        </div>
+        ` : ''}
+        <div class="form-group">
+          <label for="playerScore-${playerId}">Score:</label>
+          <input type="number" id="playerScore-${playerId}" value="${player.score}" min="0" required>
+        </div>
+        ${appState.mode === 'mvp' ? `
+        <div class="form-group">
+          <label for="playerDescription-${playerId}">Description:</label>
+          <textarea id="playerDescription-${playerId}">${player.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="playerProblem-${playerId}">Problématique résolue:</label>
+          <textarea id="playerProblem-${playerId}">${player.problem || ''}</textarea>
+        </div>
+        ` : ''}
+        <div class="form-group">
+          <label for="playerImage-${playerId}">Photo:</label>
+          <input type="file" id="playerImage-${playerId}" accept="image/*">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="savePlayer-${playerId}">Mettre à jour</button>
+        </div>
+      `;
+      
+      document.getElementById(`savePlayer-${playerId}`).addEventListener('click', () => savePlayer(playerId));
+    }
+
+    function deletePlayer(playerId) {
+      if (confirm('Voulez-vous vraiment supprimer ce joueur ?')) {
+        appState.players = appState.players.filter(p => p.id != playerId);
+        renderPlayerList();
+      }
+    }
+
+    function validatePlayers() {
+      if (appState.players.length === 0) {
+        alert('Veuillez ajouter au moins un joueur');
+        return;
+      }
+      
+      setupForm.style.display = 'none';
+      
+      if (appState.mode === 'mvp') {
+        // Trouver le MVP (score le plus élevé)
+        appState.mvp = [...appState.players].sort((a, b) => b.score - a.score)[0];
+        displayMVP();
+      } else {
+        displayRanking();
+      }
+    }
+
+    function displayMVP() {
+      mvpContainer.style.display = 'flex';
+      
+      if (appState.mvp.image) {
+        mvpImage.src = appState.mvp.image;
+      }
+      mvpName.textContent = appState.mvp.name;
+      mvpScore.textContent = `${appState.mvp.score} points`;
+      mvpDescription.textContent = appState.mvp.description || 'Description non fournie';
+      mvpProblem.textContent = appState.mvp.problem || 'Problématique non spécifiée';
+    }
+
+    function displayRanking() {
+      rankingContainer.style.display = 'flex';
+      
+      // Trier les joueurs par score
+      const sortedPlayers = [...appState.players].sort((a, b) => b.score - a.score);
+      
+      // Afficher le podium
+      if (sortedPlayers.length > 0) {
+        const first = sortedPlayers[0];
+        firstPlace.querySelector('img').src = first.image || 'https://via.placeholder.com/100';
+        firstName.textContent = `${first.name} ${first.firstName}`;
+        firstScore.textContent = `${first.score} pts`;
+      }
+      
+      if (sortedPlayers.length > 1) {
+        const second = sortedPlayers[1];
+        secondPlace.querySelector('img').src = second.image || 'https://via.placeholder.com/100';
+        secondName.textContent = `${second.name} ${second.firstName}`;
+        secondScore.textContent = `${second.score} pts`;
+      }
+      
+      if (sortedPlayers.length > 2) {
+        const third = sortedPlayers[2];
+        thirdPlace.querySelector('img').src = third.image || 'https://via.placeholder.com/100';
+        thirdName.textContent = `${third.name} ${third.firstName}`;
+        thirdScore.textContent = `${third.score} pts`;
+      }
+      
+      // Afficher les autres joueurs
+      playersGrid.innerHTML = '';
+      
+      sortedPlayers.slice(3).forEach((player, index) => {
+        const playerCard = document.createElement('div');
+        playerCard.className = 'player-card';
+        playerCard.innerHTML = `
+          <img src="${player.image || 'https://via.placeholder.com/100'}" alt="${player.name}">
+          <h3>${player.name} ${player.firstName}</h3>
+          <p>${player.team || 'Sans équipe'}</p>
+          <p class="player-score">${player.score} points</p>
+          <p>Position: ${index + 4}ème</p>
+        `;
+        playersGrid.appendChild(playerCard);
+      });
+    }
+  </script>
+</body>
+</html>

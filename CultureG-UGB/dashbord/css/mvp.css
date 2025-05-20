@@ -1,0 +1,239 @@
+:root {
+    --primary-color: #fffc4a;
+    --secondary-color: #ffb907; /* Jaune pour le trophée/étoiles */
+    --background-color: #f8f9fa;
+    --text-color-light: #ffffff;
+    --text-color-dark: #333;
+    --card-bg: #ffffff;
+    --border-radius: 10px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --transition-time: 0.3s;
+    --padding-edge: 25px; /* Standard padding from edges */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--background-color);
+    color: var(--text-color-dark);
+}
+
+/* Styles du formulaire (inchangés par rapport à la version précédente) */
+.form-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(248, 249, 250, 0.98); display: flex;
+    justify-content: center; align-items: center; z-index: 100;
+    overflow-y: auto; padding: 20px 0;
+}
+.config-form {
+    background-color: var(--card-bg); padding: 30px 40px;
+    border-radius: var(--border-radius); width: 90%; max-width: 650px;
+    box-shadow: var(--box-shadow); border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.config-form h1 {
+    text-align: center; margin-bottom: 30px; color: var(--primary-color);
+    font-weight: 700; font-size: 2rem;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+    display: block; margin-bottom: 8px; font-weight: 600;
+    color: var(--primary-color);
+}
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px; border: 1px solid #ddd;
+    border-radius: var(--border-radius); background-color: var(--card-bg);
+    color: var(--text-color-dark); font-size: 1rem;
+    transition: border-color var(--transition-time);
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none; border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.25);
+}
+.form-group textarea { min-height: 100px; resize: vertical; }
+.image-preview {
+    max-width: 100%; max-height: 200px; margin-top: 10px;
+    display: none; border-radius: var(--border-radius);
+    border: 1px solid #ddd; object-fit: cover;
+}
+.submit-btn {
+    background-color: var(--primary-color); color: white; border: none;
+    padding: 14px 30px; border-radius: var(--border-radius); cursor: pointer;
+    font-weight: 600; font-size: 1.1rem; transition: all var(--transition-time);
+    width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.submit-btn:hover {
+    background-color: #3a5bef; transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Styles pour l'affichage du champion (MODIFIÉS) */
+.display-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: none; /* Masqué initialement */
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    /* Aucun filtre d'assombrissement ici */
+}
+
+.champion-info-overlay {
+    position: relative; /* Changé de 'absolute' à 'relative' si c'est le conteneur principal pour les éléments positionnés */
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    color: var(--text-color-light);
+    /* Retrait du background-color global pour l'overlay */
+    /* Retrait de display:flex, align-items, justify-content, text-align global */
+}
+
+/* Conteneurs pour positionner les éléments aux coins */
+.info-top-left, .info-top-right, .info-bottom-left, .info-bottom-right {
+    position: absolute;
+    padding: var(--padding-edge);
+    max-width: 45%; /* Pour éviter que les éléments ne se chevauchent trop au centre */
+}
+
+.info-top-left {
+    top: 10px;
+    left: 10px;
+    text-align: left;
+    background: linear-gradient(100deg, rgb(252, 248, 5) 0%, rgba(251, 210, 7, 0) 100%);
+    border-radius: 10px; /* Exemple d'image */
+}
+
+.info-top-right {
+    top: 10px;
+    right: 10px;
+    text-align: right;
+    display: flex; /* Pour aligner titre et badge */    
+    align-items: center; /* Aligne en haut */
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.589);
+    border-radius: 10px
+}
+
+.info-bottom-left {
+    bottom: 0;
+    left: 0;
+    text-align: left;
+}
+
+.info-bottom-right {
+    bottom: 0;
+    right: 0;
+    text-align: right;
+}
+
+
+/* Styles des éléments individuels */
+.champion-name-display {
+    font-size: 2.2rem; /* Ajusté */
+    font-weight: 600;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0,0,0,0.5);
+}
+
+.champion-title-display {
+    font-size: 1.8rem; /* Ajusté */
+    font-weight: bold;
+    margin-right: 10px; /* Espace entre titre et badge */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0,0,0,0.5);
+    color: var(--text-color-light); /* Assurez-vous que la couleur est claire */
+}
+
+.champion-badge {
+    color: var(--secondary-color);
+    animation: bounce 2s infinite; /* Conservé, peut être ajusté/supprimé si distrayant */
+    line-height: 1; /* Pour un meilleur alignement vertical si le svg est inline-block */
+}
+.champion-badge svg {
+    width: 50px; /* Ajusté */
+    height: 50px; /* Ajusté */
+    filter: drop-shadow(0 0 8px rgba(255, 210, 7, 0.8));
+}
+
+.champion-description-container {
+    background-color: rgba(0, 0, 0, 0.6); /* Fond légèrement plus sombre pour la description */
+    border-radius: var(--border-radius);
+    padding: 15px;
+    /* max-width: 100%; Retiré car géré par .info-bottom-left */
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.champion-description-text {
+    font-size: 1rem; /* Ajusté */
+    line-height: 1.6;
+    max-height: 150px; /* Ajusté */
+    overflow-y: scroll;
+    padding-right: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+.champion-description-text::-webkit-scrollbar { width: 6px; }
+.champion-description-text::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); border-radius: 3px;
+}
+
+.champion-points-display {
+    font-size: 1.3rem; /* Ajusté */
+    font-weight: bold;
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    padding: 8px 18px; /* Ajusté */
+    border-radius: 50px;
+    box-shadow: var(--box-shadow);
+    display: inline-block; /* Pour que le padding/margin fonctionne bien */
+    text-shadow: none; /* Pas besoin d'ombre si le fond est solide */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); } /* Réduit */
+    60% { transform: translateY(-5px); }  /* Réduit */
+}
+
+@media (max-width: 768px) {
+    :root {
+        --padding-edge: 15px; /* Réduit le padding sur mobile */
+    }
+    .info-top-left, .info-top-right, .info-bottom-left, .info-bottom-right {
+        max-width: 55%; /* Permet un peu plus d'espace sur mobile */
+    }
+    .champion-name-display { font-size: 1.8rem; }
+    .champion-title-display { font-size: 1.4rem; }
+    .champion-badge svg { width: 40px; height: 40px; }
+    .champion-description-text { font-size: 0.9rem; max-height: 120px;}
+    .champion-points-display { font-size: 1.1rem; padding: 6px 15px;}
+
+    /* Pour les écrans très petits, on pourrait envisager de superposer ou de réorganiser encore plus */
+}
+@media (max-width: 480px) {
+     .info-top-left, .info-top-right, .info-bottom-left, .info-bottom-right {
+        max-width: 90%; /* Prend presque toute la largeur si nécessaire */
+        /* On pourrait même envisager de changer le positionnement pour les superposer */
+    }
+     .info-top-right {
+        flex-direction: column; /* Titre au dessus du badge */
+        align-items: flex-end;
+    }
+    .champion-title-display { margin-right: 0; margin-bottom: 5px; }
+}
