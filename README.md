@@ -2,4 +2,4 @@ gestion de la competition question pour un champion:
 
 lien1 🔗 https://bammite.github.io/QPC-1/
 
-lien2 🔗 
+lien2 🔗 https://bammite.github.io/QPC-1/CultureG-UGB
